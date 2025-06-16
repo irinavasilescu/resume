@@ -85,3 +85,28 @@
   bottom: 41px; /* Position it on the ground */
   z-index: 2;
 }
+
+.flower {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  bottom: 50px; /* Position it on the ground */
+  z-index: 4;
+}
+
+.flower1 {
+  background-image: url('../assets/flower1.png');
+  background-repeat: no-repeat;
+}
+
+.flower2 {
+  background-image: url('../assets/flower2.png');
+  background-repeat: no-repeat;
+}
+
+.flower3 {
+  background-image: url('../assets/flower3.png');
+  background-repeat: no-repeat;
+}

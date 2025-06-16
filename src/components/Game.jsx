@@ -44,8 +44,22 @@ const Game = () => {
       ))}
 
       <div
+        className="flower flower1"
+        style={{ left: '200px' }}
+      ></div>
+
+      <div
         className="building"
         style={{ left: '300px' }}
+      ></div>
+
+      <div
+        className="flower flower2"
+        style={{ left: '550px' }}
+      ></div>
+      <div
+        className="flower flower3"
+        style={{ left: '650px' }}
       ></div>
 
       <div 
