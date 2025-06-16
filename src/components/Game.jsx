@@ -7,6 +7,7 @@ const Game = () => {
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
   const CHARACTER_WIDTH = 75;
@@ -20,6 +21,15 @@ const Game = () => {
     { id: 6, top: '40px', left: '1300px' },
     { id: 6, top: '90px', left: '1500px' },
   ]);
+
+  const skills = [
+    'Angular', 'Vue', 'React', 'TypeScript', 'JavaScript',
+    'Angular Material', 'Bootstrap', 'HTML', 'CSS', 'SCSS',
+    'REST', 'GraphQL', 'Cypress', 'Jasmine', 'Git',
+    'Bitbucket', 'NPM', 'Yarn', 'RxJS', 'Apollo',
+    'Chart.js', 'Agile', 'Google Analytics', 'Sonar',
+    'Sentry', 'Linux', 'Mirage JS'
+  ];
 
   useEffect(() => {
     // Initialize audio
@@ -86,12 +96,20 @@ const Game = () => {
     }
   };
 
+  const handleHeadClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="game-container" ref={gameContainerRef}>
       <audio ref={audioRef} src={backgroundMusic} loop />
       
       <div className="player-status">
-        <div className="player-head">
+        <div className="player-head" onClick={handleHeadClick}>
           <div className="speech-bubble">
             Click here to see my abilities
           </div>
@@ -102,6 +120,21 @@ const Game = () => {
           ))}
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleCloseModal}>×</button>
+            <div className="modal-content">
+              {skills.map((skill, index) => (
+                <div key={index} className="skill-item">
+                  {skill}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <button 
         className={`audio-control ${isMuted ? 'muted' : ''}`}
