@@ -8,7 +8,7 @@
 
 .game-title {
   position: absolute;
-  top: 200px;
+  top: 250px;
   width: 100%;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
@@ -19,7 +19,7 @@
 }
 
 .game-container {
-  width: 2000px;
+  width: 1700px;
   height: 100%; /* Set height to 100% of parent (body) */
   background-color: #5c94fc;
   position: relative;
@@ -85,6 +85,50 @@
   z-index: 2;
 }
 
+.corporate1 {
+  position: absolute;
+  background-image: url('../assets/corporate1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  bottom: 40px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.corporate2 {
+  position: absolute;
+  background-image: url('../assets/corporate2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  bottom: 40px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.portal {
+  position: absolute;
+  background-image: url('../assets/portal.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 150px;
+  bottom: 40px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.tree {
+  position: absolute;
+  background-image: url('../assets/tree.png'); /* Assuming you have a tree.png */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  bottom: 44px; /* Position it on the ground */
+  z-index: 2;
+}
+
 .flower {
   position: absolute;
   background-size: contain;
@@ -107,5 +151,10 @@
 
 .flower3 {
   background-image: url('../assets/flower3.png');
+  background-repeat: no-repeat;
+}
+
+.flower4 {
+  background-image: url('../assets/flower4.png');
   background-repeat: no-repeat;
 }
