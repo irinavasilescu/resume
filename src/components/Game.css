@@ -43,6 +43,10 @@
   animation: jump 0.5s linear;
 }
 
+.face-left {
+  transform: scaleX(-1); /* Flip horizontally */
+}
+
 @keyframes jump {
   0% {
     bottom: 50px;

@@ -4,6 +4,7 @@ import './Game.css';
 const Game = () => {
   const [position, setPosition] = useState(0);
   const [isJumping, setIsJumping] = useState(false);
+  const [direction, setDirection] = useState('right');
   const gameContainerRef = useRef(null);
   const CHARACTER_WIDTH = 75;
 
@@ -21,9 +22,11 @@ const Game = () => {
     const handleKeyDown = (event) => {
       if (event.key === 'ArrowRight') {
         setPosition(prev => prev + 20);
+        setDirection('right');
       }
       if (event.key === 'ArrowLeft') {
         setPosition(prev => Math.max(0, prev - 20));
+        setDirection('left');
       }
       if (event.key === 'ArrowUp' && !isJumping) {
         setIsJumping(true);
@@ -112,7 +115,7 @@ const Game = () => {
       ></div>
 
       <div
-        className={`character ${isJumping ? 'jump' : ''}`}
+        className={`character ${isJumping ? 'jump' : ''} ${direction === 'left' ? 'face-left' : ''}`}
         style={{ left: `${position}px` }}
       >
       </div>
