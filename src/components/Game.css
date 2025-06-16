@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'Press Start 2P';
+  font-weight: normal;
+  font-style: normal;
+}
+
+.game-title {
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 4px 4px #000;
+  z-index: 10;
+}
+
 .game-container {
   width: 100%;
   height: 100vh;
@@ -43,4 +63,25 @@
   height: 50px;
   background-color: #00a800;
   z-index: 3;
-} 
+}
+
+.cloud {
+  position: absolute;
+  background-image: url('../assets/cloud.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 75px;
+  z-index: 1;
+}
+
+.building {
+  position: absolute;
+  background-image: url('../assets/upb.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  bottom: 41px; /* Position it on the ground */
+  z-index: 2;
+}
