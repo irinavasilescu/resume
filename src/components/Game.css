@@ -455,3 +455,47 @@
   transform: translate(3px, 3px);
   box-shadow: none;
 }
+
+.achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.achievements h2 {
+  font-family: 'Press Start 2P', cursive;
+  color: #5c94fc;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.achievement-item {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.achievement-item h3 {
+  font-family: 'Press Start 2P', cursive;
+  color: #5c94fc;
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  padding-left: 30px;
+  background-image: url('../assets/badge.png');
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: left center;
+}
+
+.achievement-item p {
+  font-family: 'Press Start 2P', cursive;
+  color: #495057;
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 0;
+}

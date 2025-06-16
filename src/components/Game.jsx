@@ -157,8 +157,24 @@ const Game = () => {
         <div className="modal-overlay" onClick={handleAchievementsCloseModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={handleAchievementsCloseModal}>×</button>
-            <div className="modal-content">
-              Achievements
+            <div className="modal-content achievements">
+              <h2>Achievements</h2>
+              <div className="achievement-item">
+                <h3>Component library</h3>
+                <p>Introduced a component library increasing development speed and UI consistency across frontend projects.</p>
+              </div>
+              <div className="achievement-item">
+                <h3>Monolith migration</h3>
+                <p>Successfully transitioned up to 50% of PHP-based eMAG Marketplace interfaces to Angular within less than 4 years.</p>
+              </div>
+              <div className="achievement-item">
+                <h3>Team building</h3>
+                <p>Expanded the frontend team from a solo developer to a 10-member team.</p>
+              </div>
+              <div className="achievement-item">
+                <h3>Onboarding</h3>
+                <p>Created onboarding documentation, technical guides, environment setup steps, coding standards. Facilitated regular feedback sessions.</p>
+              </div>
             </div>
           </div>
         </div>
