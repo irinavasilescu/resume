@@ -9,7 +9,8 @@ const Game = () => {
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAbilitiesModalOpen, setIsAbilitiesModalOpen] = useState(false);
+  const [isAchievementsModalOpen, setIsAchievementsModalOpen] = useState(false);
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
   const CHARACTER_WIDTH = 75;
@@ -99,12 +100,20 @@ const Game = () => {
   };
 
   const handleHeadClick = () => {
-    setIsModalOpen(true);
+    setIsAbilitiesModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleAbilitiesCloseModal = () => {
+    setIsAbilitiesModalOpen(false);
   };
+
+  const handleTrophyClick = () => {
+    setIsAchievementsModalOpen(true);
+  };
+
+  const handleAchievementsCloseModal = () => {
+    setIsAchievementsModalOpen(false);
+  }
 
   return (
     <div className="game-container" ref={gameContainerRef}>
@@ -116,7 +125,7 @@ const Game = () => {
             Click here to see my abilities
           </div>
         </div>
-        <div>
+        <div onClick={handleTrophyClick}>
           <img src={trophyImage} alt="Trophy" className="trophy-image" />
         </div>
         <div>
@@ -129,16 +138,27 @@ const Game = () => {
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
+      {isAbilitiesModalOpen && (
+        <div className="modal-overlay" onClick={handleAbilitiesCloseModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={handleCloseModal}>×</button>
+            <button className="modal-close" onClick={handleAbilitiesCloseModal}>×</button>
             <div className="modal-content">
               {skills.map((skill, index) => (
                 <div key={index} className="skill-item">
                   {skill}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isAchievementsModalOpen && (
+        <div className="modal-overlay" onClick={handleAchievementsCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleAchievementsCloseModal}>×</button>
+            <div className="modal-content">
+              Achievements
             </div>
           </div>
         </div>
