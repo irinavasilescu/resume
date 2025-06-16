@@ -94,7 +94,7 @@ const Game = () => {
         className={`audio-control ${isMuted ? 'muted' : ''}`}
         onClick={toggleAudio}
       >
-        {isMuted ? '🔇' : '🔊'}
+        {isMuted ? 'SOUND OFF' : 'SOUND ON'}
       </button>
 
       <div className="game-title">

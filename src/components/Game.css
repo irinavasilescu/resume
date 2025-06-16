@@ -252,7 +252,8 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 40px;
+  width: auto;
+  min-width: 100px;
   height: 40px;
   border: 3px solid #000;
   background-color: #5c94fc;
@@ -260,7 +261,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   color: #fff;
   text-shadow: 2px 2px #000;
   box-shadow: 3px 3px 0 #000;
@@ -268,6 +269,8 @@
   image-rendering: pixelated;
   font-family: 'Press Start 2P', cursive;
   z-index: 10;
+  padding: 0 10px;
+  white-space: nowrap;
 }
 
 .audio-control:hover {
