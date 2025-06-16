@@ -1,0 +1,46 @@
+.game-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #5c94fc;
+  position: relative;
+  overflow: hidden;
+}
+
+.character {
+  position: absolute;
+  bottom: 50px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+  background-image: url('../assets/girl.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+.jump {
+  animation: jump 0.5s linear;
+}
+
+@keyframes jump {
+  0% {
+    bottom: 50px;
+  }
+  50% {
+    bottom: 150px;
+  }
+  100% {
+    bottom: 50px;
+  }
+}
+
+.ground {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 50px;
+  background-color: #00a800;
+  z-index: 3;
+} 
