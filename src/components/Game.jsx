@@ -51,6 +51,23 @@ const Game = () => {
     }
   }, [position]);
 
+  const handleLeftClick = () => {
+    setPosition(prev => Math.max(0, prev - 20));
+    setDirection('left');
+  };
+
+  const handleRightClick = () => {
+    setPosition(prev => prev + 20);
+    setDirection('right');
+  };
+
+  const handleJumpClick = () => {
+    if (!isJumping) {
+      setIsJumping(true);
+      setTimeout(() => setIsJumping(false), 500);
+    }
+  };
+
   return (
     <div className="game-container" ref={gameContainerRef}>
       <div className="game-title">
@@ -140,6 +157,18 @@ const Game = () => {
       >
       </div>
       <div className="ground"></div>
+
+      <div className="control-buttons">
+        <button className="control-button" onClick={handleLeftClick}>
+          ←
+        </button>
+        <button className="control-button" onClick={handleJumpClick}>
+          ↑
+        </button>
+        <button className="control-button" onClick={handleRightClick}>
+          →
+        </button>
+      </div>
     </div>
   );
 };
