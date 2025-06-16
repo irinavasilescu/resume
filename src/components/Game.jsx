@@ -90,6 +90,15 @@ const Game = () => {
     <div className="game-container" ref={gameContainerRef}>
       <audio ref={audioRef} src={backgroundMusic} loop />
       
+      <div className="player-status">
+        <div className="player-head"></div>
+        <div className="hearts-container">
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="heart"></div>
+          ))}
+        </div>
+      </div>
+
       <button 
         className={`audio-control ${isMuted ? 'muted' : ''}`}
         onClick={toggleAudio}
