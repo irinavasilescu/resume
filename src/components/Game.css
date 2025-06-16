@@ -29,7 +29,7 @@
 
 .character {
   position: absolute;
-  bottom: 50px;
+  bottom: 75px;
   left: 100px;
   width: 75px;
   height: 75px;
@@ -65,7 +65,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: 50px;
+  height: 75px;
   background-color: #00a800;
   z-index: 3;
 }
@@ -87,7 +87,7 @@
   background-repeat: no-repeat;
   width: 200px;
   height: 200px;
-  bottom: 41px; /* Position it on the ground */
+  bottom: 66px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -98,7 +98,7 @@
   background-repeat: no-repeat;
   width: 200px;
   height: 200px;
-  bottom: 40px; /* Position it on the ground */
+  bottom: 65px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -109,7 +109,7 @@
   background-repeat: no-repeat;
   width: 200px;
   height: 200px;
-  bottom: 40px; /* Position it on the ground */
+  bottom: 65px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -120,7 +120,7 @@
   background-repeat: no-repeat;
   width: 150px;
   height: 150px;
-  bottom: 40px; /* Position it on the ground */
+  bottom: 65px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -131,7 +131,7 @@
   background-repeat: no-repeat;
   width: 100px;
   height: 100px;
-  bottom: 44px; /* Position it on the ground */
+  bottom: 69px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -141,7 +141,7 @@
   background-repeat: no-repeat;
   width: 20px;
   height: 20px;
-  bottom: 50px; /* Position it on the ground */
+  bottom: 75px; /* Position it on the ground */
   z-index: 4;
 }
 
@@ -172,7 +172,7 @@
   background-repeat: no-repeat;
   width: 50px;
   height: 50px;
-  bottom: 48px; /* Position it on the ground */
+  bottom: 73px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -183,7 +183,7 @@
   background-repeat: no-repeat;
   width: 50px;
   height: 50px;
-  bottom: 46px; /* Position it on the ground */
+  bottom: 71px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -194,7 +194,7 @@
   background-repeat: no-repeat;
   width: 50px;
   height: 50px;
-  bottom: 48px; /* Position it on the ground */
+  bottom: 73px; /* Position it on the ground */
   z-index: 2;
 }
 
@@ -205,6 +205,6 @@
   background-repeat: no-repeat;
   width: 50px;
   height: 50px;
-  bottom: 42px; /* Position it on the ground */
+  bottom: 67px; /* Position it on the ground */
   z-index: 2;
 }
