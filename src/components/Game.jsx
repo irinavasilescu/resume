@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Game.css';
 import backgroundMusic from '../assets/music.mp3';
+import trophyImage from '../assets/trophy.png';
+import earthImage from '../assets/earth.png';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
@@ -113,6 +115,12 @@ const Game = () => {
           <div className="speech-bubble">
             Click here to see my abilities
           </div>
+        </div>
+        <div>
+          <img src={trophyImage} alt="Trophy" className="trophy-image" />
+        </div>
+        <div>
+          <img src={earthImage} alt="Earth" className="earth-image" />
         </div>
         <div className="hearts-container">
           {[...Array(5)].map((_, index) => (
