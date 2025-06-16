@@ -19,19 +19,18 @@
 }
 
 .game-container {
-  width: 100%;
-  height: 100vh;
+  width: 2000px;
+  height: 100%; /* Set height to 100% of parent (body) */
   background-color: #5c94fc;
   position: relative;
-  overflow: hidden;
 }
 
 .character {
   position: absolute;
   bottom: 50px;
   left: 100px;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   background-image: url('../assets/girl.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -55,11 +54,11 @@
 }
 
 .ground {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100vw;
+  width: 100%;
   height: 50px;
   background-color: #00a800;
   z-index: 3;
@@ -90,8 +89,8 @@
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   bottom: 50px; /* Position it on the ground */
   z-index: 4;
 }

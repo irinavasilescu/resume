@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Game.css';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
   const [isJumping, setIsJumping] = useState(false);
+  const gameContainerRef = useRef(null);
+  const CHARACTER_WIDTH = 75;
+
   const [clouds, setClouds] = useState([
     { id: 1, top: '50px', left: '100px' },
     { id: 4, top: '90px', left: '300px' },
@@ -30,8 +33,21 @@ const Game = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isJumping]);
 
+  useEffect(() => {
+    if (gameContainerRef.current) {
+      const characterOffsetLeft = position;
+      const visibleScreenWidth = window.innerWidth;
+      
+      const scrollThreshold = (visibleScreenWidth / 2) - (CHARACTER_WIDTH / 2);
+
+      if (characterOffsetLeft >= scrollThreshold) {
+        gameContainerRef.current.scrollLeft = characterOffsetLeft - scrollThreshold;
+      }
+    }
+  }, [position]);
+
   return (
-    <div className="game-container">
+    <div className="game-container" ref={gameContainerRef}>
       <div className="game-title">
         A frontend developer's <br/> adventures in the wild
       </div>
