@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Game.css';
+import backgroundMusic from '../assets/music.mp3';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
+  const [isMuted, setIsMuted] = useState(true);
   const gameContainerRef = useRef(null);
+  const audioRef = useRef(null);
   const CHARACTER_WIDTH = 75;
 
   const [clouds, setClouds] = useState([
@@ -17,6 +20,21 @@ const Game = () => {
     { id: 6, top: '40px', left: '1300px' },
     { id: 6, top: '90px', left: '1500px' },
   ]);
+
+  useEffect(() => {
+    // Initialize audio
+    audioRef.current = new Audio(backgroundMusic);
+    audioRef.current.loop = true;
+  }, []);
+
+  const toggleAudio = () => {
+    if (isMuted) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+    setIsMuted(!isMuted);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -70,6 +88,15 @@ const Game = () => {
 
   return (
     <div className="game-container" ref={gameContainerRef}>
+      <audio ref={audioRef} src={backgroundMusic} loop />
+      
+      <button 
+        className={`audio-control ${isMuted ? 'muted' : ''}`}
+        onClick={toggleAudio}
+      >
+        {isMuted ? '🔇' : '🔊'}
+      </button>
+
       <div className="game-title">
         A frontend developer's <br /> adventures in the wild
       </div>

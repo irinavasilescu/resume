@@ -247,3 +247,39 @@
   transform: translate(3px, 3px);
   box-shadow: none;
 }
+
+.audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #000;
+  background-color: #5c94fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  box-shadow: 3px 3px 0 #000;
+  transition: all 0.1s ease;
+  image-rendering: pixelated;
+  font-family: 'Press Start 2P', cursive;
+  z-index: 10;
+}
+
+.audio-control:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.audio-control:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.audio-control.muted {
+  background-color: #ff6b6b;
+}
