@@ -66,7 +66,7 @@ const Game = () => {
 
       <div
         className="flower flower1"
-        style={{ left: '100px' }}
+        style={{ left: '150px' }}
       ></div>
 
       <div
@@ -76,12 +76,17 @@ const Game = () => {
 
       <div
         className="flower flower2"
-        style={{ left: '450px' }}
+        style={{ left: '440px' }}
+      ></div>
+
+      <div
+        className="pet1"
+        style={{ left: '490px' }}
       ></div>
 
       <div
         className="flower flower3"
-        style={{ left: '550px' }}
+        style={{ left: '560px' }}
       ></div>
 
       <div
@@ -91,12 +96,17 @@ const Game = () => {
 
       <div
         className="tree"
-        style={{ left: '850px' }}
+        style={{ left: '830px' }}
+      ></div>
+
+      <div
+        className="pet2"
+        style={{ left: '950px' }}
       ></div>
 
       <div
         className="flower flower4"
-        style={{ left: '1000px' }}
+        style={{ left: '1050px' }}
       ></div>
 
       <div
@@ -105,13 +115,23 @@ const Game = () => {
       ></div>
 
       <div
+        className="crochet"
+        style={{ left: '1350px' }}
+      ></div>
+
+      <div
+        className="pet3"
+        style={{ left: '1450px' }}
+      ></div>
+
+      <div
         className="flower flower1"
-        style={{ left: '1400px' }}
+        style={{ left: '1540px' }}
       ></div>
 
       <div
         className="portal"
-        style={{ left: '1500px' }}
+        style={{ left: '1600px' }}
       ></div>
 
       <div

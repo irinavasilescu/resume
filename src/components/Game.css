@@ -21,7 +21,7 @@
 }
 
 .game-container {
-  width: 1700px;
+  width: 1800px;
   height: 100%; /* Set height to 100% of parent (body) */
   background-color: #5c94fc;
   position: relative;
@@ -163,4 +163,48 @@
 .flower4 {
   background-image: url('../assets/flower4.png');
   background-repeat: no-repeat;
+}
+
+.pet1 {
+  position: absolute;
+  background-image: url('../assets/pet1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  bottom: 48px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.pet2 {
+  position: absolute;
+  background-image: url('../assets/pet2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  bottom: 46px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.pet3 {
+  position: absolute;
+  background-image: url('../assets/pet3.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  bottom: 48px; /* Position it on the ground */
+  z-index: 2;
+}
+
+.crochet {
+  position: absolute;
+  background-image: url('../assets/crochet.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  bottom: 42px; /* Position it on the ground */
+  z-index: 2;
 }
