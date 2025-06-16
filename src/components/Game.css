@@ -7,8 +7,10 @@
 }
 
 .game-title {
-  position: absolute;
+  position: fixed;
   top: 250px;
+  left: 0;
+  right: 0;
   width: 100%;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
