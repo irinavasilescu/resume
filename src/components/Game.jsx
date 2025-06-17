@@ -67,7 +67,7 @@ const Game = () => {
           }
 
           // Check if character reaches upb
-          if (newPosition >= 200 && newPosition < 300) {
+          if (newPosition >= 200 && newPosition < 220) {
             setIsEducationModalOpen(true);
           }
 
@@ -88,7 +88,7 @@ const Game = () => {
           }
 
           // Check if character reaches upb
-          if (newPosition >= 200 && newPosition < 300) {
+          if (newPosition >= 200 && newPosition < 220) {
             setIsEducationModalOpen(true);
           }
 
@@ -112,7 +112,7 @@ const Game = () => {
       const newPosition = prev - 20;
       
       // Check if character reaches upb
-      if (newPosition >= 200 && newPosition < 300) {
+      if (newPosition >= 200 && newPosition < 220) {
         setIsEducationModalOpen(true);
       }
       
@@ -126,7 +126,7 @@ const Game = () => {
       const newPosition = prev + 20;
       
       // Check if character reaches upb
-      if (newPosition >= 200 && newPosition < 300) {
+      if (newPosition >= 200 && newPosition < 220) {
         setIsEducationModalOpen(true);
       }
       
