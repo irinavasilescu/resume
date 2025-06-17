@@ -257,6 +257,18 @@ const Game = () => {
     setIsYarnBallModalOpen(false);
   };
 
+  const handleCorporate1BuildingClick = () => {
+    setIsCorporate1ModalOpen(true);
+  };
+
+  const handleCorporate2BuildingClick = () => {
+    setIsCorporate2ModalOpen(true);
+  };
+
+  const handleEducationBuildingClick = () => {
+    setIsEducationModalOpen(true);
+  };
+
   const handleInstagramRedirect = () => {
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
@@ -485,6 +497,7 @@ const Game = () => {
       <div
         className="building"
         style={{ left: '200px' }}
+        onClick={handleEducationBuildingClick}
       ></div>
 
       <div
@@ -505,6 +518,7 @@ const Game = () => {
       <div
         className="corporate1-building"
         style={{ left: '600px' }}
+        onClick={handleCorporate1BuildingClick}
       ></div>
 
       <div
@@ -525,6 +539,7 @@ const Game = () => {
       <div
         className="corporate2-building"
         style={{ left: '1100px' }}
+        onClick={handleCorporate2BuildingClick}
       ></div>
 
       <div

@@ -104,6 +104,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   height: 200px;
   bottom: 66px; /* Position it on the ground */
   z-index: 2;
+  cursor: pointer;
 }
 
 .corporate1 {
@@ -158,6 +159,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   height: 200px;
   bottom: 65px; /* Position it on the ground */
   z-index: 2;
+  cursor: pointer;
 }
 
 .corporate2 {
@@ -212,6 +214,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   height: 200px;
   bottom: 65px; /* Position it on the ground */
   z-index: 2;
+  cursor: pointer;
 }
 
 .portal {
