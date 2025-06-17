@@ -23,7 +23,7 @@ const Game = () => {
     { id: 4, top: '80px', left: '800px' },
     { id: 5, top: '20px', left: '1000px' },
     { id: 6, top: '40px', left: '1300px' },
-    { id: 6, top: '90px', left: '1500px' },
+    { id: 7, top: '90px', left: '1500px' },
   ]);
 
   const skills = [
@@ -52,15 +52,39 @@ const Game = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'ArrowRight') {
-        setPosition(prev => prev + 20);
+      if (event.key === 'd' || event.key === 'D') {
+        setPosition(prev => {
+          const newPosition = prev + 20;
+          const characterOffset = newPosition;
+          const visibleScreenWidth = window.innerWidth;
+          const scrollThreshold = visibleScreenWidth / 2;
+
+          if (characterOffset >= scrollThreshold) {
+            window.scrollBy(20, 0);
+          }
+
+          return newPosition;
+        });
         setDirection('right');
       }
-      if (event.key === 'ArrowLeft') {
-        setPosition(prev => Math.max(0, prev - 20));
+
+      if (event.key === 'a' || event.key === 'A') {
+        setPosition(prev => {
+          const newPosition = prev - 20;
+          const characterOffset = newPosition;
+          const visibleScreenWidth = window.innerWidth;
+          const scrollThreshold = visibleScreenWidth / 2;
+
+          if (characterOffset <= scrollThreshold) {
+            window.scrollBy(-20, 0);
+          }
+
+          return newPosition;
+        });
         setDirection('left');
       }
-      if (event.key === 'ArrowUp' && !isJumping) {
+      
+      if ((event.key === 'w' || event.key === 'W') && !isJumping) {
         setIsJumping(true);
         setTimeout(() => setIsJumping(false), 500);
       }
@@ -69,19 +93,6 @@ const Game = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isJumping]);
-
-  useEffect(() => {
-    if (gameContainerRef.current) {
-      const characterOffsetLeft = position;
-      const visibleScreenWidth = window.innerWidth;
-
-      const scrollThreshold = (visibleScreenWidth / 2) - (CHARACTER_WIDTH / 2);
-
-      if (characterOffsetLeft >= scrollThreshold) {
-        gameContainerRef.current.scrollLeft = characterOffsetLeft - scrollThreshold;
-      }
-    }
-  }, [position]);
 
   const handleLeftClick = () => {
     setPosition(prev => Math.max(0, prev - 20));
@@ -311,13 +322,13 @@ const Game = () => {
 
       <div className="control-buttons">
         <button className="control-button" onClick={handleLeftClick}>
-          ←
+          A
         </button>
         <button className="control-button" onClick={handleJumpClick}>
-          ↑
+          W
         </button>
         <button className="control-button" onClick={handleRightClick}>
-          →
+          D
         </button>
       </div>
     </div>
