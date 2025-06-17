@@ -273,6 +273,10 @@ const Game = () => {
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
+  const handleYarnBallClick = () => {
+    setIsYarnBallModalOpen(true);
+  };
+
   return (
     <div className="game-container" ref={gameContainerRef}>
       <audio ref={audioRef} src={backgroundMusic} loop />
@@ -545,6 +549,7 @@ const Game = () => {
       <div
         className="crochet"
         style={{ left: '1350px' }}
+        onClick={handleYarnBallClick}
       ></div>
 
       <div

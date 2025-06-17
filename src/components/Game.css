@@ -311,6 +311,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   height: 50px;
   bottom: 67px; /* Position it on the ground */
   z-index: 2;
+  cursor: pointer;
 }
 
 .control-buttons {
