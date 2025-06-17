@@ -248,6 +248,9 @@ const Game = () => {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={handleAbilitiesCloseModal}>×</button>
             <div className="modal-content">
+              <div className="abilities-description">
+                <p>Experienced Frontend Team Leader and Frontend Developer with 5+ years of experience in web development. Proficient in Agile methodologies, I guide my colleagues to implement best practices, adhere to high-quality coding standards, and ensure seamless collaboration between frontend, backend and UX/UI teams.</p>
+              </div>
               {skills.map((skill, index) => (
                 <div key={index} className="skill-item">
                   {skill}
