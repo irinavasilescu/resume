@@ -57,6 +57,8 @@ const Game = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      closeAllModals();
+
       if (event.key === 'd' || event.key === 'D') {
         setPosition(prev => {
           const newPosition = prev + 20;
@@ -128,6 +130,15 @@ const Game = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isJumping]);
+
+  const closeAllModals = () => {
+    setIsAbilitiesModalOpen(false);
+    setIsAchievementsModalOpen(false);
+    setIsLanguagesModalOpen(false);
+    setIsEducationModalOpen(false);
+    setIsCorporate1ModalOpen(false);
+    setIsCorporate2ModalOpen(false);
+  }
 
   const handleLeftClick = () => {
     setPosition(prev => {
