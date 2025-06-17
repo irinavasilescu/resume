@@ -15,6 +15,7 @@ const Game = () => {
   const [isAchievementsModalOpen, setIsAchievementsModalOpen] = useState(false);
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
   const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
+  const [isCorporate1ModalOpen, setIsCorporate1ModalOpen] = useState(false);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -71,6 +72,11 @@ const Game = () => {
             setIsEducationModalOpen(true);
           }
 
+          // Check if character reaches corporate1
+          if (newPosition >= 600 && newPosition < 620) {
+            setIsCorporate1ModalOpen(true);
+          }
+
           return newPosition;
         });
         setDirection('right');
@@ -90,6 +96,11 @@ const Game = () => {
           // Check if character reaches upb
           if (newPosition >= 200 && newPosition < 220) {
             setIsEducationModalOpen(true);
+          }
+
+          // Check if character reaches corporate1
+          if (newPosition >= 600 && newPosition < 620) {
+            setIsCorporate1ModalOpen(true);
           }
 
           return newPosition;
@@ -116,6 +127,11 @@ const Game = () => {
         setIsEducationModalOpen(true);
       }
       
+      // Check if character reaches corporate1
+      if (newPosition >= 600 && newPosition < 620) {
+        setIsCorporate1ModalOpen(true);
+      }
+      
       return newPosition;
     });
     setDirection('left');
@@ -128,6 +144,11 @@ const Game = () => {
       // Check if character reaches upb
       if (newPosition >= 200 && newPosition < 220) {
         setIsEducationModalOpen(true);
+      }
+      
+      // Check if character reaches corporate1
+      if (newPosition >= 600 && newPosition < 620) {
+        setIsCorporate1ModalOpen(true);
       }
       
       return newPosition;
@@ -168,6 +189,10 @@ const Game = () => {
 
   const handleEducationCloseModal = () => {
     setIsEducationModalOpen(false);
+  };
+
+  const handleCorporate1CloseModal = () => {
+    setIsCorporate1ModalOpen(false);
   };
 
   return (
@@ -276,6 +301,38 @@ const Game = () => {
         </div>
       )}
 
+      {isCorporate1ModalOpen && (
+        <div className="modal-overlay" onClick={handleCorporate1CloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleCorporate1CloseModal}>×</button>
+            <div className="modal-content corporate1">
+              <h2>WORK EXPERIENCE</h2>
+              <div className="job-item">
+                <h3>Frontend Developer</h3>
+                <p>Bitdefender</p>
+                <p>10/2019 - 05/2021</p>
+                <p>Bucharest, Romania</p>
+                <p>Used TypeScript and Angular to convert specifications into maintainable, testable, and scalable code, focusing on consumer-facing features such as subscriptions, invoices, device management</p>
+                <p>Developed reusable components using Angular, HTML and CSS, then seamlessly integrating them into the existing project architecture</p>
+                <p>Wrote unit tests using the Jasmine testing framework to ensure robust and reliable code</p>
+                <p>Managed HTTP requests, facilitated data sharing between components</p>
+                <p>Implemented data caching using RxJS for efficient and reactive data handling</p>
+                <p>Integrated external SDKs to enable key functionalities, including payment method management, billing information access, invoice handling and auto-renewal service control</p>
+              </div>
+              <div className="job-item">
+                <h3>Junior Software Developer in Test</h3>
+                <p>Bitdefender</p>
+                <p>07/2019 - 10/2019</p>
+                <p>Bucharest, Romania</p>
+                <p>Developed automated tests in Java within Android Studio</p>
+                <p>Created Python and bash scripts to schedule test executions at specified times</p>
+                <p>Wrote Python scripts for sending test results to various endpoints like TestRail, Slack and generating detailed statistics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <button 
         className={`audio-control ${isMuted ? 'muted' : ''}`}
         onClick={toggleAudio}
@@ -320,7 +377,7 @@ const Game = () => {
       ></div>
 
       <div
-        className="corporate1"
+        className="corporate1-building"
         style={{ left: '600px' }}
       ></div>
 
