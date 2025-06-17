@@ -379,8 +379,8 @@ const Game = () => {
               </div>
               <div className="job-item">
                 <h3>Frontend Developer</h3>
-                <p>Bitdefender</p>
-                <p>07/2019 - 10/2019</p>
+                <p>eMAG</p>
+                <p>05/2021 - Present</p>
                 <p>Bucharest, Romania</p>
                 <p>Lead the implementation of micro-frontend projects using Angular, Angular Material, SCSS, RxJS, and Apollo Client, ensuring a modular and scalable architecture that enables sellers to efficiently manage campaigns, orders, products, ads and opportunities</p>
                 <p>Developed reusable components for use across multiple micro-frontend interfaces</p>
