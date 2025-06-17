@@ -9,12 +9,14 @@ const Game = () => {
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
+
+  // Modals
   const [isAbilitiesModalOpen, setIsAbilitiesModalOpen] = useState(false);
   const [isAchievementsModalOpen, setIsAchievementsModalOpen] = useState(false);
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
+
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
-  const CHARACTER_WIDTH = 75;
 
   const [clouds, setClouds] = useState([
     { id: 1, top: '50px', left: '100px' },
@@ -75,7 +77,7 @@ const Game = () => {
           const visibleScreenWidth = window.innerWidth;
           const scrollThreshold = visibleScreenWidth / 2;
 
-          if (characterOffset <= scrollThreshold) {
+          if (characterOffset >= scrollThreshold) {
             window.scrollBy(-20, 0);
           }
 
@@ -148,7 +150,7 @@ const Game = () => {
         <div className="trophy-container" onClick={handleTrophyClick}>
           <img src={trophyImage} alt="Trophy" className="trophy-image" />
         </div>
-        <div onClick={handleEarthClick}>
+        <div className="earth-container" onClick={handleEarthClick}>
           <img src={earthImage} alt="Earth" className="earth-image" />
         </div>
         <div className="hearts-container">
