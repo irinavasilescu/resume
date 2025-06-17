@@ -16,6 +16,7 @@ const Game = () => {
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
   const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
   const [isCorporate1ModalOpen, setIsCorporate1ModalOpen] = useState(false);
+  const [isCorporate2ModalOpen, setIsCorporate2ModalOpen] = useState(false);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -73,8 +74,13 @@ const Game = () => {
           }
 
           // Check if character reaches corporate1
-          if (newPosition >= 600 && newPosition < 620) {
+          if (newPosition >= 620 && newPosition < 640) {
             setIsCorporate1ModalOpen(true);
+          }
+
+          // Check if character reaches corporate2
+          if (newPosition >= 1100 && newPosition < 1120) {
+            setIsCorporate2ModalOpen(true);
           }
 
           return newPosition;
@@ -99,8 +105,13 @@ const Game = () => {
           }
 
           // Check if character reaches corporate1
-          if (newPosition >= 600 && newPosition < 620) {
+          if (newPosition >= 620 && newPosition < 640) {
             setIsCorporate1ModalOpen(true);
+          }
+
+          // Check if character reaches corporate2
+          if (newPosition >= 1100 && newPosition < 1120) {
+            setIsCorporate2ModalOpen(true);
           }
 
           return newPosition;
@@ -128,8 +139,13 @@ const Game = () => {
       }
       
       // Check if character reaches corporate1
-      if (newPosition >= 600 && newPosition < 620) {
+      if (newPosition >= 620 && newPosition < 640) {
         setIsCorporate1ModalOpen(true);
+      }
+      
+      // Check if character reaches corporate2
+      if (newPosition >= 1100 && newPosition < 1120) {
+        setIsCorporate2ModalOpen(true);
       }
       
       return newPosition;
@@ -147,8 +163,13 @@ const Game = () => {
       }
       
       // Check if character reaches corporate1
-      if (newPosition >= 600 && newPosition < 620) {
+      if (newPosition >= 620 && newPosition < 640) {
         setIsCorporate1ModalOpen(true);
+      }
+      
+      // Check if character reaches corporate2
+      if (newPosition >= 1100 && newPosition < 1120) {
+        setIsCorporate2ModalOpen(true);
       }
       
       return newPosition;
@@ -193,6 +214,10 @@ const Game = () => {
 
   const handleCorporate1CloseModal = () => {
     setIsCorporate1ModalOpen(false);
+  };
+
+  const handleCorporate2CloseModal = () => {
+    setIsCorporate2ModalOpen(false);
   };
 
   return (
@@ -333,6 +358,45 @@ const Game = () => {
         </div>
       )}
 
+      {isCorporate2ModalOpen && (
+        <div className="modal-overlay" onClick={handleCorporate2CloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleCorporate2CloseModal}>×</button>
+            <div className="modal-content corporate2">
+              <h2>WORK EXPERIENCE</h2>
+              <div className="job-item">
+                <h3>Technical Team Leader</h3>
+                <p>eMAG</p>
+                <p>11/2021 - Present</p>
+                <p>Bucharest, Romania</p>
+                <p>Responsible for leading a team of 9 frontend developers in the development and deployment of e-commerce web applications</p>
+                <p>Foster an environment focused on achievement while supporting professional development by setting clear team and individual objectives</p>
+                <p>Give constructive feedback and identify growth opportunities for team members during performance reviews</p>
+                <p>Ensure alignment and smooth workflow by actively participating in SCRUM ceremonies, such as sprint planning, sprint refinement, one-on-one meetings and daily stand-ups</p>
+                <p>Contribute to the recruitment of frontend developers and QA analysts by conducting interviews, making sure they fit the team culture and technical requirements</p>
+                <p>Enhance code quality and system reliability by addressing issues raised by SonarQube and Sentry</p>
+                <p>Ensure intuitive and consistent user interfaces by collaborating with the UX/UI team, using Figma</p>
+              </div>
+              <div className="job-item">
+                <h3>Frontend Developer</h3>
+                <p>Bitdefender</p>
+                <p>07/2019 - 10/2019</p>
+                <p>Bucharest, Romania</p>
+                <p>Lead the implementation of micro-frontend projects using Angular, Angular Material, SCSS, RxJS, and Apollo Client, ensuring a modular and scalable architecture that enables sellers to efficiently manage campaigns, orders, products, ads and opportunities</p>
+                <p>Developed reusable components for use across multiple micro-frontend interfaces</p>
+                <p>Ensured consistency and improved efficiency throughout the application by integrating these components seamlessly</p>
+                <p>Used Mirage JS to mock APIs, facilitating smooth development and testing without relying on real backend services</p>
+                <p>Wrote and maintained automated tests using Cypress</p>
+                <p>Wrote comprehensive unit tests using the Jasmine testing framework</p>
+                <p>Took ownership of maintaining and enhancing an existing VueJS micro-frontend project</p>
+                <p>Utilized the CI/CD pipeline to monitor builds, unit tests, and end-to-end tests, ensuring higher quality and reliability throughout the development process</p>
+                <p>Collaborated closely with the support team to troubleshoot and resolve client-facing issues, providing technical expertise to ensure customer satisfaction</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <button 
         className={`audio-control ${isMuted ? 'muted' : ''}`}
         onClick={toggleAudio}
@@ -397,7 +461,7 @@ const Game = () => {
       ></div>
 
       <div
-        className="corporate2"
+        className="corporate2-building"
         style={{ left: '1100px' }}
       ></div>
 
