@@ -14,6 +14,7 @@ const Game = () => {
   const [isAbilitiesModalOpen, setIsAbilitiesModalOpen] = useState(false);
   const [isAchievementsModalOpen, setIsAchievementsModalOpen] = useState(false);
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
+  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -65,6 +66,11 @@ const Game = () => {
             window.scrollBy(20, 0);
           }
 
+          // Check if character reaches upb
+          if (newPosition >= 200 && newPosition < 300) {
+            setIsEducationModalOpen(true);
+          }
+
           return newPosition;
         });
         setDirection('right');
@@ -79,6 +85,11 @@ const Game = () => {
 
           if (characterOffset >= scrollThreshold) {
             window.scrollBy(-20, 0);
+          }
+
+          // Check if character reaches upb
+          if (newPosition >= 200 && newPosition < 300) {
+            setIsEducationModalOpen(true);
           }
 
           return newPosition;
@@ -97,12 +108,30 @@ const Game = () => {
   }, [isJumping]);
 
   const handleLeftClick = () => {
-    setPosition(prev => Math.max(0, prev - 20));
+    setPosition(prev => {
+      const newPosition = prev - 20;
+      
+      // Check if character reaches upb
+      if (newPosition >= 200 && newPosition < 300) {
+        setIsEducationModalOpen(true);
+      }
+      
+      return newPosition;
+    });
     setDirection('left');
   };
 
   const handleRightClick = () => {
-    setPosition(prev => prev + 20);
+    setPosition(prev => {
+      const newPosition = prev + 20;
+      
+      // Check if character reaches upb
+      if (newPosition >= 200 && newPosition < 300) {
+        setIsEducationModalOpen(true);
+      }
+      
+      return newPosition;
+    });
     setDirection('right');
   };
 
@@ -135,6 +164,10 @@ const Game = () => {
 
   const handleLanguagesCloseModal = () => {
     setIsLanguagesModalOpen(false);
+  };
+
+  const handleEducationCloseModal = () => {
+    setIsEducationModalOpen(false);
   };
 
   return (
@@ -221,6 +254,22 @@ const Game = () => {
                   <h3>English</h3>
                   <p>Professional working proficiency</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isEducationModalOpen && (
+        <div className="modal-overlay" onClick={handleEducationCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleEducationCloseModal}>×</button>
+            <div className="modal-content education">
+              <h2>EDUCATION</h2>
+              <div className="education-item">
+                <h3>Bachelor's Degree in Computer Science</h3>
+                <p>University Politehnica of Bucharest</p>
+                <p>09/2016 - 07/2020, Romania</p>
               </div>
             </div>
           </div>
