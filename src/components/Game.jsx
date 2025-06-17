@@ -17,6 +17,7 @@ const Game = () => {
   const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
   const [isCorporate1ModalOpen, setIsCorporate1ModalOpen] = useState(false);
   const [isCorporate2ModalOpen, setIsCorporate2ModalOpen] = useState(false);
+  const [isYarnBallModalOpen, setIsYarnBallModalOpen] = useState(false);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -85,6 +86,11 @@ const Game = () => {
             setIsCorporate2ModalOpen(true);
           }
 
+          // Check if character reaches yarn ball
+          if (newPosition >= 1350 && newPosition < 1370) {
+            setIsYarnBallModalOpen(true);
+          }
+
           return newPosition;
         });
         setDirection('right');
@@ -116,6 +122,11 @@ const Game = () => {
             setIsCorporate2ModalOpen(true);
           }
 
+          // Check if character reaches yarn ball
+          if (newPosition >= 1350 && newPosition < 1370) {
+            setIsYarnBallModalOpen(true);
+          }
+
           return newPosition;
         });
         setDirection('left');
@@ -138,6 +149,7 @@ const Game = () => {
     setIsEducationModalOpen(false);
     setIsCorporate1ModalOpen(false);
     setIsCorporate2ModalOpen(false);
+    setIsYarnBallModalOpen(false);
   }
 
   const handleLeftClick = () => {
@@ -157,6 +169,11 @@ const Game = () => {
       // Check if character reaches corporate2
       if (newPosition >= 1100 && newPosition < 1120) {
         setIsCorporate2ModalOpen(true);
+      }
+      
+      // Check if character reaches yarn ball
+      if (newPosition >= 1350 && newPosition < 1370) {
+        setIsYarnBallModalOpen(true);
       }
       
       return newPosition;
@@ -181,6 +198,11 @@ const Game = () => {
       // Check if character reaches corporate2
       if (newPosition >= 1100 && newPosition < 1120) {
         setIsCorporate2ModalOpen(true);
+      }
+      
+      // Check if character reaches yarn ball
+      if (newPosition >= 1350 && newPosition < 1370) {
+        setIsYarnBallModalOpen(true);
       }
       
       return newPosition;
@@ -229,6 +251,14 @@ const Game = () => {
 
   const handleCorporate2CloseModal = () => {
     setIsCorporate2ModalOpen(false);
+  };
+
+  const handleYarnBallCloseModal = () => {
+    setIsYarnBallModalOpen(false);
+  };
+
+  const handleInstagramRedirect = () => {
+    window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
   return (
@@ -405,6 +435,24 @@ const Game = () => {
                 <p>Took ownership of maintaining and enhancing an existing VueJS micro-frontend project</p>
                 <p>Utilized the CI/CD pipeline to monitor builds, unit tests, and end-to-end tests, ensuring higher quality and reliability throughout the development process</p>
                 <p>Collaborated closely with the support team to troubleshoot and resolve client-facing issues, providing technical expertise to ensure customer satisfaction</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isYarnBallModalOpen && (
+        <div className="modal-overlay" onClick={handleYarnBallCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleYarnBallCloseModal}>×</button>
+            <div className="modal-content yarn-ball">
+              <h2>INSTAGRAM</h2>
+              <div className="instagram-item">
+                <h3>Follow my creative journey</h3>
+                <p>Check out my crochet projects and other creative endeavors on Instagram!</p>
+                <button className="instagram-button" onClick={handleInstagramRedirect}>
+                  Visit Instagram
+                </button>
               </div>
             </div>
           </div>
