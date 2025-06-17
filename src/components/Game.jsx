@@ -9,6 +9,7 @@ const Game = () => {
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   // Modals
   const [isAbilitiesModalOpen, setIsAbilitiesModalOpen] = useState(false);
@@ -45,6 +46,16 @@ const Game = () => {
     // Initialize audio
     audioRef.current = new Audio(backgroundMusic);
     audioRef.current.loop = true;
+
+    // Check screen size on mount
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const toggleAudio = () => {
@@ -60,7 +71,7 @@ const Game = () => {
     const handleKeyDown = (event) => {
       closeAllModals();
 
-      if (event.key === 'd' || event.key === 'D') {
+      if (event.key === 'd' || event.key === 'D' || event.key === 'ArrowRight') {
         setPosition(prev => {
           const newPosition = prev + 20;
           const characterOffset = newPosition;
@@ -96,7 +107,7 @@ const Game = () => {
         setDirection('right');
       }
 
-      if (event.key === 'a' || event.key === 'A') {
+      if (event.key === 'a' || event.key === 'A' || event.key === 'ArrowLeft') {
         setPosition(prev => {
           const newPosition = prev - 20;
           const characterOffset = newPosition;
@@ -132,7 +143,7 @@ const Game = () => {
         setDirection('left');
       }
       
-      if ((event.key === 'w' || event.key === 'W') && !isJumping) {
+      if ((event.key === 'w' || event.key === 'W' || event.key === 'ArrowUp') && !isJumping) {
         setIsJumping(true);
         setTimeout(() => setIsJumping(false), 500);
       }
@@ -590,13 +601,13 @@ const Game = () => {
 
       <div className="control-buttons">
         <button className="control-button" onClick={handleLeftClick}>
-          A
+          {isSmallScreen ? '←' : 'A'}
         </button>
         <button className="control-button" onClick={handleJumpClick}>
-          W
+          {isSmallScreen ? '↑' : 'W'}
         </button>
         <button className="control-button" onClick={handleRightClick}>
-          D
+          {isSmallScreen ? '→' : 'D'}
         </button>
       </div>
     </div>
