@@ -155,6 +155,13 @@ const Game = () => {
   const handleLeftClick = () => {
     setPosition(prev => {
       const newPosition = prev - 20;
+      const characterOffset = newPosition;
+      const visibleScreenWidth = window.innerWidth;
+      const scrollThreshold = visibleScreenWidth / 2;
+
+      if (characterOffset >= scrollThreshold) {
+        window.scrollBy(-20, 0);
+      }
       
       // Check if character reaches upb
       if (newPosition >= 200 && newPosition < 220) {
@@ -182,8 +189,15 @@ const Game = () => {
   };
 
   const handleRightClick = () => {
-    setPosition(prev => {
+    setPosition(prev => {      
       const newPosition = prev + 20;
+      const characterOffset = newPosition;
+      const visibleScreenWidth = window.innerWidth;
+      const scrollThreshold = visibleScreenWidth / 2;
+
+      if (characterOffset >= scrollThreshold) {
+        window.scrollBy(20, 0);
+      }
       
       // Check if character reaches upb
       if (newPosition >= 200 && newPosition < 220) {
