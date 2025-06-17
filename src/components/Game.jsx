@@ -11,6 +11,7 @@ const Game = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isAbilitiesModalOpen, setIsAbilitiesModalOpen] = useState(false);
   const [isAchievementsModalOpen, setIsAchievementsModalOpen] = useState(false);
+  const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
   const CHARACTER_WIDTH = 75;
@@ -115,6 +116,14 @@ const Game = () => {
     setIsAchievementsModalOpen(false);
   }
 
+  const handleEarthClick = () => {
+    setIsLanguagesModalOpen(true);
+  };
+
+  const handleLanguagesCloseModal = () => {
+    setIsLanguagesModalOpen(false);
+  };
+
   return (
     <div className="game-container" ref={gameContainerRef}>
       <audio ref={audioRef} src={backgroundMusic} loop />
@@ -125,10 +134,10 @@ const Game = () => {
             Click here to see my abilities
           </div>
         </div>
-        <div onClick={handleTrophyClick}>
+        <div className="trophy-container" onClick={handleTrophyClick}>
           <img src={trophyImage} alt="Trophy" className="trophy-image" />
         </div>
-        <div>
+        <div onClick={handleEarthClick}>
           <img src={earthImage} alt="Earth" className="earth-image" />
         </div>
         <div className="hearts-container">
@@ -174,6 +183,31 @@ const Game = () => {
               <div className="achievement-item">
                 <h3>Onboarding</h3>
                 <p>Created onboarding documentation, technical guides, environment setup steps, coding standards. Facilitated regular feedback sessions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isLanguagesModalOpen && (
+        <div className="modal-overlay" onClick={handleLanguagesCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleLanguagesCloseModal}>×</button>
+            <div className="modal-content languages">
+              <h2>Languages</h2>
+              <div className="language-item">
+                <div className="flag romanian-flag">🇷🇴</div>
+                <div className="language-text">
+                  <h3>Romanian</h3>
+                  <p>Native language</p>
+                </div>
+              </div>
+              <div className="language-item">
+                <div className="flag english-flag">🇬🇧</div>
+                <div className="language-text">
+                  <h3>English</h3>
+                  <p>Professional working proficiency</p>
+                </div>
               </div>
             </div>
           </div>
