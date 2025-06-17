@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+html, body {
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 @font-face {
   font-family: 'Press Start 2P';
   font-weight: normal;
@@ -25,6 +35,13 @@
   height: 100%; /* Set height to 100% of parent (body) */
   background-color: #5c94fc;
   position: relative;
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.game-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .character {
