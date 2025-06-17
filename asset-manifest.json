@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4f5a6e5d.css",
+    "main.js": "/static/js/main.c81ced43.js",
+    "static/js/453.f19e9853.chunk.js": "/static/js/453.f19e9853.chunk.js",
+    "static/media/music.mp3": "/static/media/music.b5cd0d75dd4007ef5df9.mp3",
+    "static/media/corporate1.png": "/static/media/corporate1.986ef972b5d2b1a849cd.png",
+    "static/media/corporate2.png": "/static/media/corporate2.e824f7e257796b34bb2d.png",
+    "static/media/upb.png": "/static/media/upb.0550a10e00b3fe5e464b.png",
+    "static/media/girl.png": "/static/media/girl.114f4f6bf74037c19cfe.png",
+    "static/media/girl_head.png": "/static/media/girl_head.ad112c71551bad4a1762.png",
+    "static/media/cloud.png": "/static/media/cloud.2aefc37e517d747e85ae.png",
+    "static/media/pet1.png": "/static/media/pet1.290d7dc8916f7625cf5f.png",
+    "static/media/crochet.png": "/static/media/crochet.3a2ca78bd487d148f86c.png",
+    "static/media/pet2.png": "/static/media/pet2.219ac29512eab6542bb3.png",
+    "static/media/flower1.png": "/static/media/flower1.a88efd29efbc9a8136fb.png",
+    "static/media/pet3.png": "/static/media/pet3.dfe9fb2e74e9567deb08.png",
+    "static/media/trophy.png": "/static/media/trophy.bf4fba297af43b280bc2.png",
+    "static/media/flower4.png": "/static/media/flower4.bb39f4fd285f000fef87.png",
+    "static/media/flower3.png": "/static/media/flower3.ad8231c24f97996e5a6c.png",
+    "static/media/tree.png": "/static/media/tree.0573e9af1f62f06e654d.png",
+    "static/media/heart.png": "/static/media/heart.46f9257ad5e163b9a2ff.png",
+    "static/media/flower2.png": "/static/media/flower2.88694c15d5eba798fd81.png",
+    "static/media/badge.png": "/static/media/badge.5998bcfa0bcc1473e3d5.png",
+    "static/media/earth.png": "/static/media/earth.48e09209c5dc3aa8e12e.png",
+    "index.html": "/index.html",
+    "main.4f5a6e5d.css.map": "/static/css/main.4f5a6e5d.css.map",
+    "main.c81ced43.js.map": "/static/js/main.c81ced43.js.map",
+    "453.f19e9853.chunk.js.map": "/static/js/453.f19e9853.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4f5a6e5d.css",
+    "static/js/main.c81ced43.js"
+  ]
+}
