@@ -71,6 +71,14 @@ const Game = () => {
   ];
 
   useEffect(() => {
+    // Fix viewport height for mobile browsers (address bar issue)
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    
+    setViewportHeight();
+    
     // Initialize audio
     audioRef.current = new Audio(backgroundMusic);
     audioRef.current.loop = true;
@@ -78,12 +86,17 @@ const Game = () => {
     // Check screen size on mount
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 768);
+      setViewportHeight(); // Update viewport height on resize
     };
     
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
+    window.addEventListener('orientationchange', setViewportHeight);
     
-    return () => window.removeEventListener('resize', checkScreenSize);
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+      window.removeEventListener('orientationchange', setViewportHeight);
+    };
   }, []);
 
   const toggleAudio = () => {

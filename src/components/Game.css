@@ -31,14 +31,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 .game-wrapper {
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100dvh; /* Dynamic viewport height - accounts for mobile browser UI */
   overflow: hidden;
   position: relative;
 }
 
 .game-container {
   width: 1800px;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100dvh; /* Dynamic viewport height - accounts for mobile browser UI */
   background-color: #5c94fc;
   position: relative;
   will-change: transform; /* Optimize transform performance */
@@ -911,7 +913,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 @media (max-width: 768px) {
   .modal {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
   }
 
   .modal-content {
