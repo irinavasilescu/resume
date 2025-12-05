@@ -29,29 +29,31 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   z-index: 10;
 }
 
-.game-container {
-  width: 1800px;
-  height: 100%; /* Set height to 100% of parent (body) */
-  background-color: #5c94fc;
+.game-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   position: relative;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-.game-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+.game-container {
+  width: 1800px;
+  height: 100vh;
+  background-color: #5c94fc;
+  position: relative;
+  will-change: transform; /* Optimize transform performance */
 }
 
 .character {
-  position: absolute;
+  position: fixed;
   bottom: 75px;
-  left: 100px;
   width: 75px;
   height: 75px;
   background-image: url('../assets/girl.png');
   background-size: contain;
   background-repeat: no-repeat;
-  z-index: 2;
+  z-index: 10; /* Higher z-index to stay above background */
+  transform: translateX(-50%); /* Center the character */
 }
 
 .jump {
@@ -59,7 +61,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 }
 
 .face-left {
-  transform: scaleX(-1); /* Flip horizontally */
+  transform: translateX(-50%) scaleX(-1); /* Center and flip horizontally */
 }
 
 @keyframes jump {
@@ -111,7 +113,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 70vh;
   overflow-y: auto;
   grid-template-columns: 1fr !important;
 }
@@ -166,7 +167,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 70vh;
   overflow-y: auto;
   grid-template-columns: 1fr !important;
 }
@@ -528,7 +528,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
   padding: 20px;
-  max-height: 70vh;
   overflow-y: auto;
 }
 
@@ -596,7 +595,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 70vh;
   overflow-y: auto;
 }
 
@@ -692,7 +690,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 70vh;
   overflow-y: auto;
 }
 
@@ -734,7 +731,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 70vh;
   overflow-y: auto;
   align-items: center;
 }
@@ -796,4 +792,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .instagram-button:active {
   transform: translate(3px, 3px);
   box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .modal-content {
+    height: 100%;
+    overflow-x: scroll;
+  }
 }

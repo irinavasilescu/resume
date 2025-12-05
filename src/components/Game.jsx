@@ -6,6 +6,7 @@ import earthImage from '../assets/earth.png';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
+  const [characterScreenPosition, setCharacterScreenPosition] = useState(20); // Percentage from left
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
@@ -72,15 +73,25 @@ const Game = () => {
       closeAllModals();
 
       if (event.key === 'd' || event.key === 'D' || event.key === 'ArrowRight') {
+        const gameContainerWidth = 1800;
+        const viewportWidth = window.innerWidth;
+        const moveAmount = 20;
+        const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+        
         setPosition(prev => {
-          const newPosition = prev + 20;
-          const characterOffset = newPosition;
-          const visibleScreenWidth = window.innerWidth;
-          const scrollThreshold = visibleScreenWidth / 2;
-
-          if (characterOffset >= scrollThreshold) {
-            window.scrollBy(20, 0);
+          // Check if we've reached the end of the background
+          if (prev >= maxBackgroundScroll) {
+            // At the end - move character instead of background
+            setCharacterScreenPosition(prevCharPos => {
+              const newCharPos = prevCharPos + (moveAmount / viewportWidth * 100);
+              // Allow character to move to right edge (90% to keep some margin)
+              return Math.min(90, Math.max(5, newCharPos));
+            });
+            return prev; // Background position stays at max
           }
+          
+          // Normal movement - move background
+          const newPosition = prev + moveAmount;
 
           // Check if character reaches upb
           if (newPosition >= 200 && newPosition < 220) {
@@ -108,15 +119,37 @@ const Game = () => {
       }
 
       if (event.key === 'a' || event.key === 'A' || event.key === 'ArrowLeft') {
+        const gameContainerWidth = 1800;
+        const viewportWidth = window.innerWidth;
+        const moveAmount = 20;
+        const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+        
         setPosition(prev => {
-          const newPosition = prev - 20;
-          const characterOffset = newPosition;
-          const visibleScreenWidth = window.innerWidth;
-          const scrollThreshold = visibleScreenWidth / 2;
-
-          if (characterOffset >= scrollThreshold) {
-            window.scrollBy(-20, 0);
+          // If at end and character has moved right, move character back first
+          if (prev >= maxBackgroundScroll) {
+            setCharacterScreenPosition(prevCharPos => {
+              if (prevCharPos > 10) {
+                const newCharPos = prevCharPos - (moveAmount / viewportWidth * 100);
+                const clampedPos = Math.min(90, Math.max(5, newCharPos));
+                // If character is back to starting position (10%), allow background to scroll
+                if (clampedPos <= 10) {
+                  const newPosition = Math.max(0, prev - moveAmount);
+                  // Check interactions
+                  if (newPosition >= 200 && newPosition < 220) setIsEducationModalOpen(true);
+                  if (newPosition >= 620 && newPosition < 640) setIsCorporate1ModalOpen(true);
+                  if (newPosition >= 1100 && newPosition < 1120) setIsCorporate2ModalOpen(true);
+                  if (newPosition >= 1350 && newPosition < 1370) setIsYarnBallModalOpen(true);
+                  setPosition(newPosition);
+                }
+                return clampedPos;
+              }
+              return prevCharPos;
+            });
+            return prev; // Background stays at max until character is back
           }
+          
+          // Normal movement when not at end
+          const newPosition = Math.max(0, prev - moveAmount);
 
           // Check if character reaches upb
           if (newPosition >= 200 && newPosition < 220) {
@@ -164,15 +197,37 @@ const Game = () => {
   }
 
   const handleLeftClick = () => {
+    const gameContainerWidth = 1800;
+    const viewportWidth = window.innerWidth;
+    const moveAmount = 20;
+    const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+    
     setPosition(prev => {
-      const newPosition = prev - 20;
-      const characterOffset = newPosition;
-      const visibleScreenWidth = window.innerWidth;
-      const scrollThreshold = visibleScreenWidth / 2;
-
-      if (characterOffset >= scrollThreshold) {
-        window.scrollBy(-20, 0);
+      // If at end and character has moved right, move character back first
+      if (prev >= maxBackgroundScroll) {
+        setCharacterScreenPosition(prevCharPos => {
+          if (prevCharPos > 10) {
+            const newCharPos = prevCharPos - (moveAmount / viewportWidth * 100);
+            const clampedPos = Math.min(90, Math.max(5, newCharPos));
+            // If character is back to starting position (10%), allow background to scroll
+            if (clampedPos <= 10) {
+              const newPosition = Math.max(0, prev - moveAmount);
+              // Check interactions
+              if (newPosition >= 200 && newPosition < 220) setIsEducationModalOpen(true);
+              if (newPosition >= 620 && newPosition < 640) setIsCorporate1ModalOpen(true);
+              if (newPosition >= 1100 && newPosition < 1120) setIsCorporate2ModalOpen(true);
+              if (newPosition >= 1350 && newPosition < 1370) setIsYarnBallModalOpen(true);
+              setPosition(newPosition);
+            }
+            return clampedPos;
+          }
+          return prevCharPos;
+        });
+        return prev; // Background stays at max until character is back
       }
+      
+      // Normal movement when not at end
+      const newPosition = Math.max(0, prev - moveAmount);
       
       // Check if character reaches upb
       if (newPosition >= 200 && newPosition < 220) {
@@ -200,15 +255,25 @@ const Game = () => {
   };
 
   const handleRightClick = () => {
-    setPosition(prev => {      
-      const newPosition = prev + 20;
-      const characterOffset = newPosition;
-      const visibleScreenWidth = window.innerWidth;
-      const scrollThreshold = visibleScreenWidth / 2;
-
-      if (characterOffset >= scrollThreshold) {
-        window.scrollBy(20, 0);
+    const gameContainerWidth = 1800;
+    const viewportWidth = window.innerWidth;
+    const moveAmount = 20;
+    const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+    
+    setPosition(prev => {
+      // Check if we've reached the end of the background
+      if (prev >= maxBackgroundScroll) {
+        // At the end - move character instead of background
+        setCharacterScreenPosition(prevCharPos => {
+          const newCharPos = prevCharPos + (moveAmount / viewportWidth * 100);
+          // Allow character to move to right edge (90% to keep some margin)
+          return Math.min(90, Math.max(5, newCharPos));
+        });
+        return prev; // Background position stays at max
       }
+      
+      // Normal movement - move background
+      const newPosition = prev + moveAmount;
       
       // Check if character reaches upb
       if (newPosition >= 200 && newPosition < 220) {
@@ -298,12 +363,16 @@ const Game = () => {
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
+  const handleWebsiteRedirect = () => {
+    window.open('https://croseteleirinei.com', '_blank');
+  };
+
   const handleYarnBallClick = () => {
     setIsYarnBallModalOpen(true);
   };
 
   return (
-    <div className="game-container" ref={gameContainerRef}>
+    <div className="game-wrapper">
       <audio ref={audioRef} src={backgroundMusic} loop />
       
       <div className="player-status">
@@ -490,9 +559,12 @@ const Game = () => {
               <h2>INSTAGRAM</h2>
               <div className="instagram-item">
                 <h3>Follow my creative journey</h3>
-                <p>Check out my crochet projects and other creative endeavors on Instagram!</p>
+                <p>Check out my crochet projects and other creative endeavors!</p>
                 <button className="instagram-button" onClick={handleInstagramRedirect}>
                   Visit Instagram
+                </button>
+                <button className="instagram-button" onClick={handleWebsiteRedirect}>
+                  Visit Website
                 </button>
               </div>
             </div>
@@ -510,6 +582,12 @@ const Game = () => {
       <div className="game-title">
         A frontend developer's <br /> adventures in the wild
       </div>
+
+      <div 
+        className="game-container" 
+        ref={gameContainerRef}
+        style={{ transform: `translateX(-${position}px)` }}
+      >
       {clouds.map(cloud => (
         <div
           key={cloud.id}
@@ -592,12 +670,14 @@ const Game = () => {
         style={{ left: '1600px' }}
       ></div>
 
+      <div className="ground"></div>
+      </div>
+
       <div
         className={`character ${isJumping ? 'jump' : ''} ${direction === 'left' ? 'face-left' : ''}`}
-        style={{ left: `${position}px` }}
+        style={{ left: `${characterScreenPosition}%` }}
       >
       </div>
-      <div className="ground"></div>
 
       <div className="control-buttons">
         <button className="control-button" onClick={handleLeftClick}>
