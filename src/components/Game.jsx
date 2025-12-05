@@ -41,6 +41,8 @@ const Game = () => {
   const [isCorporate1ModalOpen, setIsCorporate1ModalOpen] = useState(false);
   const [isCorporate2ModalOpen, setIsCorporate2ModalOpen] = useState(false);
   const [isYarnBallModalOpen, setIsYarnBallModalOpen] = useState(false);
+  const [showPortalDialogue, setShowPortalDialogue] = useState(false);
+  const [portalDialogueLeft, setPortalDialogueLeft] = useState(0);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -90,6 +92,49 @@ const Game = () => {
     }
     setIsMuted(!isMuted);
   };
+
+  // Check portal proximity continuously
+  useEffect(() => {
+    const viewportWidth = window.innerWidth;
+    const gameContainerWidth = 1800;
+    const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+    
+    // Calculate character's world position
+    let charWorldX;
+    
+    if (position >= maxBackgroundScroll) {
+      // Character is at end
+      const screenPixelsFromLeft = (characterScreenPosition / 100) * viewportWidth;
+      charWorldX = maxBackgroundScroll + screenPixelsFromLeft;
+    } else {
+      // Character is in normal scrolling area
+      const screenPixelsFromLeft = (characterScreenPosition / 100) * viewportWidth;
+      charWorldX = position + screenPixelsFromLeft;
+    }
+    
+    // Check if character is near portal (1600px)
+    if (charWorldX >= 1550 && charWorldX <= 1650) {
+      setShowPortalDialogue(true);
+      
+      // Calculate portal's screen position for dialogue bubble
+      const portalWorldX = 1600;
+      let portalScreenX;
+      
+      if (position >= maxBackgroundScroll) {
+        // Portal is at end, calculate screen position
+        portalScreenX = portalWorldX - maxBackgroundScroll;
+      } else {
+        // Portal is in normal scrolling area
+        portalScreenX = portalWorldX - position;
+      }
+      
+      // Position dialogue bubble above portal (centered on portal)
+      const bubbleLeft = Math.max(10, Math.min(viewportWidth - 310, portalScreenX - 150));
+      setPortalDialogueLeft(bubbleLeft);
+    } else {
+      setShowPortalDialogue(false);
+    }
+  }, [position, characterScreenPosition]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -207,6 +252,7 @@ const Game = () => {
           if (prevCharPos > 10) {
             const newCharPos = prevCharPos - (moveAmount / viewportWidth * 100);
             const clampedPos = Math.min(90, Math.max(5, newCharPos));
+            
             // If character is back to starting position (10%), allow background to scroll
             if (clampedPos <= 10) {
               const newPosition = Math.max(0, prev - moveAmount);
@@ -238,8 +284,8 @@ const Game = () => {
         // At the end - move character instead of background
         setCharacterScreenPosition(prevCharPos => {
           const newCharPos = prevCharPos + (moveAmount / viewportWidth * 100);
-          // Allow character to move to right edge (90% to keep some margin)
-          return Math.min(90, Math.max(5, newCharPos));
+          const clampedPos = Math.min(90, Math.max(5, newCharPos));
+          return clampedPos;
         });
         return prev; // Background position stays at max
       }
@@ -280,10 +326,10 @@ const Game = () => {
     // Coin positions and dimensions
     const coinWidth = 30;
     const coinPositions = [
-      { x: 300, modal: 'education' },      // UPB building
-      { x: 700, modal: 'corporate1' },    // Bitdefender building
-      { x: 1200, modal: 'corporate2' },   // eMAG building
-      { x: 1400, modal: 'yarnBall' }      // Yarn ball
+      { x: 285, modal: 'education' },      // UPB building
+      { x: 685, modal: 'corporate1' },    // Bitdefender building
+      { x: 1185, modal: 'corporate2' },   // eMAG building
+      { x: 1385, modal: 'yarnBall' }      // Yarn ball
     ];
     
     // Check for actual intersection with coins
@@ -487,7 +533,7 @@ const Game = () => {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={handleLanguagesCloseModal}>×</button>
             <div className="modal-content languages">
-              <h2>Languages</h2>
+              <h2>Socials</h2>
               <div className="language-item">
                 <div className="flag romanian-flag">🇷🇴</div>
                 <div className="language-text">
@@ -653,7 +699,7 @@ const Game = () => {
 
       <div
         className="coin coin-education"
-        style={{ left: '300px' }}
+        style={{ left: '285px' }}
       ></div>
 
       <div
@@ -679,7 +725,7 @@ const Game = () => {
 
       <div
         className="coin coin-corporate1"
-        style={{ left: '700px' }}
+        style={{ left: '685px' }}
       ></div>
 
       <div
@@ -705,7 +751,7 @@ const Game = () => {
 
       <div
         className="coin coin-corporate2"
-        style={{ left: '1200px' }}
+        style={{ left: '1185px' }}
       ></div>
 
       <div
@@ -716,7 +762,7 @@ const Game = () => {
 
       <div
         className="coin coin-yarn"
-        style={{ left: '1400px' }}
+        style={{ left: '1385px' }}
       ></div>
 
       <div
@@ -742,6 +788,20 @@ const Game = () => {
         style={{ left: `${characterScreenPosition}%` }}
       >
       </div>
+
+      {showPortalDialogue && (
+        <div 
+          className="dialogue-bubble portal-dialogue"
+          style={{ 
+            bottom: '200px',
+            left: `${portalDialogueLeft}px`
+          }}
+        >
+          <div className="dialogue-content">
+            Who knows what the future might bring?
+          </div>
+        </div>
+      )}
 
       <div className="control-buttons">
         <button className="control-button" onClick={handleLeftClick}>

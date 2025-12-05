@@ -815,6 +815,29 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   box-shadow: none;
 }
 
+.dialogue-bubble {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.portal-dialogue {
+  max-width: 300px;
+}
+
+.dialogue-content {
+  background-color: #fff;
+  border: 3px solid #000;
+  padding: 15px 20px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #000;
+  line-height: 1.6;
+  box-shadow: 4px 4px 0 #000;
+  image-rendering: pixelated;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .modal {
     width: 100vw;
@@ -824,6 +847,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   .modal-content {
     height: 100%;
     max-height: unset;
-    overflow-x: scroll;
+    overflow-y: scroll;
   }
 }
