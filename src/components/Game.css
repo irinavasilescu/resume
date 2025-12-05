@@ -961,6 +961,33 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   text-align: center;
 }
 
+/* Particle effects */
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 50;
+  image-rendering: pixelated;
+  transition: opacity 0.1s linear;
+}
+
+.particle-coin {
+  background: radial-gradient(circle, #ffd700 0%, #ffaa00 50%, #ff6600 100%);
+  box-shadow: 0 0 4px #ffd700;
+}
+
+.particle-jump {
+  background: radial-gradient(circle, #87ceeb 0%, #5c94fc 50%, #4169e1 100%);
+  box-shadow: 0 0 4px #87ceeb;
+}
+
+.particle-default {
+  background: radial-gradient(circle, #fff 0%, #ccc 50%, #999 100%);
+  box-shadow: 0 0 4px #fff;
+}
+
 @media (max-width: 768px) {
   .modal {
     width: 100vw;

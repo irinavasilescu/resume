@@ -46,6 +46,7 @@ const Game = () => {
   const [portalDialogueLeft, setPortalDialogueLeft] = useState(0);
   const [explodedCoins, setExplodedCoins] = useState(new Set());
   const [explodingCoins, setExplodingCoins] = useState(new Set());
+  const [particles, setParticles] = useState([]);
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -132,6 +133,56 @@ const Game = () => {
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + 0.05);
   };
+
+  // Create particle effects
+  const createParticles = (x, y, type = 'default') => {
+    const particleCount = type === 'coin' ? 12 : 8;
+    const newParticles = [];
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const speed = type === 'coin' ? 80 + Math.random() * 40 : 60 + Math.random() * 30;
+      const vx = Math.cos(angle) * speed;
+      const vy = Math.sin(angle) * speed;
+      
+      newParticles.push({
+        id: Date.now() + i + Math.random(),
+        x,
+        y,
+        vx,
+        vy,
+        type,
+        life: 1.0,
+      });
+    }
+    
+    setParticles(prev => [...prev, ...newParticles]);
+    
+    // Remove particles after animation
+    setTimeout(() => {
+      setParticles(prev => prev.filter(p => !newParticles.find(np => np.id === p.id)));
+    }, 1000);
+  };
+
+  // Animate particles
+  useEffect(() => {
+    if (particles.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setParticles(prev => prev.map(particle => {
+        const gravity = particle.type === 'jump' ? 0.5 : 0.3;
+        return {
+          ...particle,
+          x: particle.x + particle.vx * 0.016,
+          y: particle.y + particle.vy * 0.016,
+          vy: particle.vy + gravity,
+          life: particle.life - 0.016,
+        };
+      }).filter(p => p.life > 0));
+    }, 16); // ~60fps
+    
+    return () => clearInterval(interval);
+  }, [particles.length]);
 
   const [clouds, setClouds] = useState([
     { id: 1, top: '50px', left: '100px' },
@@ -300,6 +351,12 @@ const Game = () => {
       
       if ((event.key === 'w' || event.key === 'W' || event.key === 'ArrowUp') && !isJumping) {
         playJumpSound();
+        
+        // Create jump particles
+        const viewportWidth = window.innerWidth;
+        const charScreenX = (characterScreenPositionRef.current / 100) * viewportWidth;
+        createParticles(charScreenX, window.innerHeight - 125, 'jump'); // Character bottom position
+        
         setIsJumping(true);
         // Small delay to ensure state has updated before checking collision
         setTimeout(() => {
@@ -459,6 +516,20 @@ const Game = () => {
       playCoinSound();
       playExplosionSound();
       
+      // Create particle effect for coin explosion
+      const viewportWidth = window.innerWidth;
+      const gameContainerWidth = 1800;
+      const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+      
+      let coinScreenX;
+      if (currentPos >= maxBackgroundScroll) {
+        coinScreenX = hitCoin.x - maxBackgroundScroll;
+      } else {
+        coinScreenX = hitCoin.x - currentPos;
+      }
+      
+      createParticles(coinScreenX, window.innerHeight - 275, 'coin'); // 275px from bottom
+      
       // Trigger explosion
       setExplodingCoins(prev => new Set(prev).add(hitCoin.modal));
       
@@ -502,6 +573,13 @@ const Game = () => {
 
   const handleJumpClick = () => {
     if (!isJumping) {
+      playJumpSound();
+      
+      // Create jump particles
+      const viewportWidth = window.innerWidth;
+      const charScreenX = (characterScreenPositionRef.current / 100) * viewportWidth;
+      createParticles(charScreenX, window.innerHeight - 125, 'jump'); // Character bottom position
+      
       setIsJumping(true);
       // Small delay to ensure state has updated before checking collision
       setTimeout(() => {
@@ -946,6 +1024,19 @@ const Game = () => {
         style={{ left: `${characterScreenPosition}%` }}
       >
       </div>
+
+      {/* Particle effects */}
+      {particles.map(particle => (
+        <div
+          key={particle.id}
+          className={`particle particle-${particle.type}`}
+          style={{
+            left: `${particle.x}px`,
+            bottom: `${window.innerHeight - particle.y}px`,
+            opacity: particle.life,
+          }}
+        />
+      ))}
 
       {showPortalDialogue && (
         <div 
