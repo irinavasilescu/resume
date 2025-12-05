@@ -494,6 +494,14 @@ const Game = () => {
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
+  const handleLinkedInRedirect = () => {
+    window.open('https://www.linkedin.com/in/irina-vasilescu', '_blank');
+  };
+
+  const handleGmailRedirect = () => {
+    window.open('mailto:irinavasilescu@gmail.com', '_blank');
+  };
+
   const handleWebsiteRedirect = () => {
     window.open('https://croseteleirinei.com', '_blank');
   };
@@ -576,19 +584,20 @@ const Game = () => {
             <button className="modal-close" onClick={handleLanguagesCloseModal}>×</button>
             <div className="modal-content languages">
               <h2>Socials</h2>
-              <div className="language-item">
-                <div className="flag romanian-flag">🇷🇴</div>
-                <div className="language-text">
-                  <h3>Romanian</h3>
-                  <p>Native language</p>
-                </div>
+              <div className="social-item">
+                <button className="social-button instagram" onClick={handleInstagramRedirect}>
+                  Instagram
+                </button>
               </div>
-              <div className="language-item">
-                <div className="flag english-flag">🇬🇧</div>
-                <div className="language-text">
-                  <h3>English</h3>
-                  <p>Professional working proficiency</p>
-                </div>
+              <div className="social-item">
+                <button className="social-button linkedin" onClick={handleLinkedInRedirect}>
+                  LinkedIn
+                </button>
+              </div>
+              <div className="social-item">
+                <button className="social-button gmail" onClick={handleGmailRedirect}>
+                  Gmail
+                </button>
               </div>
             </div>
           </div>
