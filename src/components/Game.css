@@ -98,6 +98,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   width: 150px;
   height: 75px;
   z-index: 1;
+  animation: cloudMove 120s linear infinite;
+  will-change: transform;
+}
+
+@keyframes cloudMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1800px - 150px));
+  }
 }
 
 .building {
@@ -752,7 +763,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
+  overflow-y: hidden !important;
 }
 
 .achievements h2 {
@@ -796,6 +807,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  overflow-y: hidden !important;
 }
 
 .languages h2 {
@@ -891,7 +903,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
+  overflow-y: hidden !important;
 }
 
 .education h2 {
@@ -932,7 +944,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
+  overflow-y: hidden !important;
   align-items: center;
 }
 
