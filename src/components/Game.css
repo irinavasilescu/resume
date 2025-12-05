@@ -786,6 +786,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   margin: 0;
 }
 
+.bear-image {
+  width: 150px;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 10px;
+}
+
 .instagram-button {
   background-color: #e4405f;
   color: #fff;

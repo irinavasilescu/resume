@@ -3,6 +3,7 @@ import './Game.css';
 import backgroundMusic from '../assets/music.mp3';
 import trophyImage from '../assets/trophy.png';
 import earthImage from '../assets/earth.png';
+import bearImage from '../assets/bear.png';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
@@ -231,7 +232,7 @@ const Game = () => {
     const moveAmount = 20;
     const maxBackgroundScroll = gameContainerWidth - viewportWidth;
     
-    setPosition(prev => {
+    setPosition(prev => {      
       // Check if we've reached the end of the background
       if (prev >= maxBackgroundScroll) {
         // At the end - move character instead of background
@@ -598,8 +599,9 @@ const Game = () => {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={handleYarnBallCloseModal}>×</button>
             <div className="modal-content yarn-ball">
-              <h2>INSTAGRAM</h2>
+              <h2>MY CROCHET JOURNEY</h2>
               <div className="instagram-item">
+                <img src={bearImage} alt="Bear" className="bear-image" />
                 <h3>Follow my creative journey</h3>
                 <p>Check out my crochet projects and other creative endeavors!</p>
                 <button className="instagram-button" onClick={handleInstagramRedirect}>
