@@ -6,7 +6,7 @@ import earthImage from '../assets/earth.png';
 
 const Game = () => {
   const [position, setPosition] = useState(0);
-  const [characterScreenPosition, setCharacterScreenPosition] = useState(20); // Percentage from left
+  const [characterScreenPosition, setCharacterScreenPosition] = useState(5); // Percentage from left
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
