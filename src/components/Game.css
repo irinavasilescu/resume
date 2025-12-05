@@ -23,7 +23,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   width: 100%;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
-  font-size: 30px;
+  font-size: 20px;
   color: #fff;
   text-shadow: 4px 4px #000;
   z-index: 10;
@@ -250,6 +250,63 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   background-position: center;
   z-index: 3;
   image-rendering: pixelated;
+  transition: opacity 0.3s ease;
+}
+
+.coin.exploded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.coin.exploding {
+  animation: explode 0.5s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.explosion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ffd700 0%, #ffaa00 30%, #ff6600 60%, transparent 100%);
+  border-radius: 50%;
+  animation: explosionParticles 0.5s ease-out forwards;
+  z-index: 4;
+  image-rendering: pixelated;
+}
+
+@keyframes explosionParticles {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  50% {
+    width: 60px;
+    height: 60px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
 }
 
 .flower {

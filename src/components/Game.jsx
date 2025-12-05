@@ -43,6 +43,8 @@ const Game = () => {
   const [isYarnBallModalOpen, setIsYarnBallModalOpen] = useState(false);
   const [showPortalDialogue, setShowPortalDialogue] = useState(false);
   const [portalDialogueLeft, setPortalDialogueLeft] = useState(0);
+  const [explodedCoins, setExplodedCoins] = useState(new Set());
+  const [explodingCoins, setExplodingCoins] = useState(new Set());
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
@@ -209,7 +211,7 @@ const Game = () => {
             const currentCharPos = characterScreenPositionRef.current;
             // Only check if we haven't detected a collision yet
             if (!collisionDetected) {
-              collisionDetected = checkCoinCollision(currentPos, currentCharPos);
+              collisionDetected = checkCoinCollision(currentPos, currentCharPos, explodedCoins);
               if (collisionDetected) {
                 clearInterval(checkInterval);
               }
@@ -297,7 +299,7 @@ const Game = () => {
     setDirection('right');
   };
 
-  const checkCoinCollision = (currentPos, currentCharPos) => {
+  const checkCoinCollision = (currentPos, currentCharPos, explodedCoins) => {
     // Character position in the game world
     const viewportWidth = window.innerWidth;
     const gameContainerWidth = 1800;
@@ -336,6 +338,11 @@ const Game = () => {
     let hitCoin = null;
     
     coinPositions.forEach(coin => {
+      // Skip if coin is already exploded
+      if (explodedCoins.has(coin.modal)) {
+        return;
+      }
+      
       // Coin bounding box (X coordinates)
       const coinLeft = coin.x - (coinWidth / 2);
       const coinRight = coin.x + (coinWidth / 2);
@@ -348,6 +355,28 @@ const Game = () => {
     
     // Only open modal for the coin that was actually hit
     if (hitCoin) {
+      // Trigger explosion
+      setExplodingCoins(prev => new Set(prev).add(hitCoin.modal));
+      
+      // Hide coin after explosion animation
+      setTimeout(() => {
+        setExplodingCoins(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(hitCoin.modal);
+          return newSet;
+        });
+        setExplodedCoins(prev => new Set(prev).add(hitCoin.modal));
+        
+        // Regenerate coin after 5 seconds
+        setTimeout(() => {
+          setExplodedCoins(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(hitCoin.modal);
+            return newSet;
+          });
+        }, 5000);
+      }, 500); // Explosion animation duration
+      
       switch(hitCoin.modal) {
         case 'education':
           setIsEducationModalOpen(true);
@@ -380,7 +409,7 @@ const Game = () => {
           const currentCharPos = characterScreenPositionRef.current;
           // Only check if we haven't detected a collision yet
           if (!collisionDetected) {
-            collisionDetected = checkCoinCollision(currentPos, currentCharPos);
+            collisionDetected = checkCoinCollision(currentPos, currentCharPos, explodedCoins);
             if (collisionDetected) {
               clearInterval(checkInterval);
             }
@@ -698,9 +727,11 @@ const Game = () => {
       ></div>
 
       <div
-        className="coin coin-education"
+        className={`coin coin-education ${explodingCoins.has('education') ? 'exploding' : ''} ${explodedCoins.has('education') ? 'exploded' : ''}`}
         style={{ left: '285px' }}
-      ></div>
+      >
+        {explodingCoins.has('education') && <div className="explosion"></div>}
+      </div>
 
       <div
         className="flower flower2"
@@ -724,9 +755,11 @@ const Game = () => {
       ></div>
 
       <div
-        className="coin coin-corporate1"
+        className={`coin coin-corporate1 ${explodingCoins.has('corporate1') ? 'exploding' : ''} ${explodedCoins.has('corporate1') ? 'exploded' : ''}`}
         style={{ left: '685px' }}
-      ></div>
+      >
+        {explodingCoins.has('corporate1') && <div className="explosion"></div>}
+      </div>
 
       <div
         className="tree"
@@ -750,9 +783,11 @@ const Game = () => {
       ></div>
 
       <div
-        className="coin coin-corporate2"
+        className={`coin coin-corporate2 ${explodingCoins.has('corporate2') ? 'exploding' : ''} ${explodedCoins.has('corporate2') ? 'exploded' : ''}`}
         style={{ left: '1185px' }}
-      ></div>
+      >
+        {explodingCoins.has('corporate2') && <div className="explosion"></div>}
+      </div>
 
       <div
         className="crochet"
@@ -761,9 +796,11 @@ const Game = () => {
       ></div>
 
       <div
-        className="coin coin-yarn"
+        className={`coin coin-yarn ${explodingCoins.has('yarnBall') ? 'exploding' : ''} ${explodedCoins.has('yarnBall') ? 'exploded' : ''}`}
         style={{ left: '1385px' }}
-      ></div>
+      >
+        {explodingCoins.has('yarnBall') && <div className="explosion"></div>}
+      </div>
 
       <div
         className="pet3"
