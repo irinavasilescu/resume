@@ -439,10 +439,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   box-shadow: none;
 }
 
-.audio-control {
+.audio-controls {
   position: fixed;
   top: 20px;
   right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.audio-control {
   width: auto;
   min-width: 100px;
   height: 40px;
@@ -459,7 +466,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   transition: all 0.1s ease;
   image-rendering: pixelated;
   font-family: 'Press Start 2P', cursive;
-  z-index: 10;
   padding: 0 10px;
   white-space: nowrap;
 }

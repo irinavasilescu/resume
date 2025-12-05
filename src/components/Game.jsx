@@ -30,7 +30,8 @@ const Game = () => {
   };
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMusicMuted, setIsMusicMuted] = useState(true);
+  const [isSoundMuted, setIsSoundMuted] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   // Modals
@@ -50,6 +51,87 @@ const Game = () => {
   const audioRef = useRef(null);
   const positionRef = useRef(0);
   const characterScreenPositionRef = useRef(5);
+  
+  // Sound effect functions using Web Audio API
+  const playJumpSound = () => {
+    if (isSoundMuted) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+    oscillator.type = 'square';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  };
+  
+  const playCoinSound = () => {
+    if (isSoundMuted) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.15);
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.15);
+  };
+  
+  const playExplosionSound = () => {
+    if (isSoundMuted) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.3);
+    oscillator.type = 'sawtooth';
+    
+    gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+  };
+  
+  const playClickSound = () => {
+    if (isSoundMuted) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.05);
+    oscillator.type = 'square';
+    
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.05);
+  };
 
   const [clouds, setClouds] = useState([
     { id: 1, top: '50px', left: '100px' },
@@ -100,12 +182,18 @@ const Game = () => {
   }, []);
 
   const toggleAudio = () => {
-    if (isMuted) {
+    playClickSound();
+    if (isMusicMuted) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-    setIsMuted(!isMuted);
+    setIsMusicMuted(!isMusicMuted);
+  };
+
+  const toggleSoundEffects = () => {
+    playClickSound();
+    setIsSoundMuted(!isSoundMuted);
   };
 
   // Check portal proximity continuously
@@ -213,6 +301,7 @@ const Game = () => {
       }
       
       if ((event.key === 'w' || event.key === 'W' || event.key === 'ArrowUp') && !isJumping) {
+        playJumpSound();
         setIsJumping(true);
         // Small delay to ensure state has updated before checking collision
         setTimeout(() => {
@@ -255,6 +344,7 @@ const Game = () => {
   }
 
   const handleLeftClick = () => {
+    playClickSound();
     const gameContainerWidth = 1800;
     const viewportWidth = window.innerWidth;
     const moveAmount = 20;
@@ -288,6 +378,7 @@ const Game = () => {
   };
 
   const handleRightClick = () => {
+    playClickSound();
     const gameContainerWidth = 1800;
     const viewportWidth = window.innerWidth;
     const moveAmount = 20;
@@ -368,6 +459,10 @@ const Game = () => {
     
     // Only open modal for the coin that was actually hit
     if (hitCoin) {
+      // Play coin collection and explosion sounds
+      playCoinSound();
+      playExplosionSound();
+      
       // Trigger explosion
       setExplodingCoins(prev => new Set(prev).add(hitCoin.modal));
       
@@ -439,66 +534,82 @@ const Game = () => {
   };
 
   const handleHeadClick = () => {
+    playClickSound();
     setIsAbilitiesModalOpen(true);
   };
 
   const handleAbilitiesCloseModal = () => {
+    playClickSound();
     setIsAbilitiesModalOpen(false);
   };
 
   const handleTrophyClick = () => {
+    playClickSound();
     setIsAchievementsModalOpen(true);
   };
 
   const handleAchievementsCloseModal = () => {
+    playClickSound();
     setIsAchievementsModalOpen(false);
   }
 
   const handleEarthClick = () => {
+    playClickSound();
     setIsLanguagesModalOpen(true);
   };
 
   const handleLanguagesCloseModal = () => {
+    playClickSound();
     setIsLanguagesModalOpen(false);
   };
 
   const handleEducationCloseModal = () => {
+    playClickSound();
     setIsEducationModalOpen(false);
   };
 
   const handleCorporate1CloseModal = () => {
+    playClickSound();
     setIsCorporate1ModalOpen(false);
   };
 
   const handleCorporate2CloseModal = () => {
+    playClickSound();
     setIsCorporate2ModalOpen(false);
   };
 
   const handleYarnBallCloseModal = () => {
+    playClickSound();
     setIsYarnBallModalOpen(false);
   };
 
   const handleCorporate1BuildingClick = () => {
+    playClickSound();
     setIsCorporate1ModalOpen(true);
   };
 
   const handleCorporate2BuildingClick = () => {
+    playClickSound();
     setIsCorporate2ModalOpen(true);
   };
 
   const handleEducationBuildingClick = () => {
+    playClickSound();
     setIsEducationModalOpen(true);
   };
 
   const handleInstagramRedirect = () => {
+    playClickSound();
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
   const handleLinkedInRedirect = () => {
+    playClickSound();
     window.open('https://www.linkedin.com/in/irina-vasilescu', '_blank');
   };
 
   const handleGmailRedirect = () => {
+    playClickSound();
     window.open('mailto:irinavasilescu@gmail.com', '_blank');
   };
 
@@ -507,6 +618,7 @@ const Game = () => {
   };
 
   const handleYarnBallClick = () => {
+    playClickSound();
     setIsYarnBallModalOpen(true);
   };
 
@@ -713,12 +825,20 @@ const Game = () => {
         </div>
       )}
 
-      <button 
-        className={`audio-control ${isMuted ? 'muted' : ''}`}
-        onClick={toggleAudio}
-      >
-        {isMuted ? 'SOUND OFF' : 'SOUND ON'}
-      </button>
+      <div className="audio-controls">
+        <button 
+          className={`audio-control ${isMusicMuted ? 'muted' : ''}`}
+          onClick={toggleAudio}
+        >
+          {isMusicMuted ? 'MUSIC OFF' : 'MUSIC ON'}
+        </button>
+        <button 
+          className={`audio-control sound-control ${isSoundMuted ? 'muted' : ''}`}
+          onClick={toggleSoundEffects}
+        >
+          {isSoundMuted ? 'SOUND OFF' : 'SOUND ON'}
+        </button>
+      </div>
 
       <div className="game-title">
         A frontend developer's <br /> adventures in the wild
