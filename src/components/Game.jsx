@@ -182,7 +182,6 @@ const Game = () => {
   }, []);
 
   const toggleAudio = () => {
-    playClickSound();
     if (isMusicMuted) {
       audioRef.current.play();
     } else {
@@ -192,7 +191,6 @@ const Game = () => {
   };
 
   const toggleSoundEffects = () => {
-    playClickSound();
     setIsSoundMuted(!isSoundMuted);
   };
 
@@ -344,7 +342,6 @@ const Game = () => {
   }
 
   const handleLeftClick = () => {
-    playClickSound();
     const gameContainerWidth = 1800;
     const viewportWidth = window.innerWidth;
     const moveAmount = 20;
@@ -378,7 +375,6 @@ const Game = () => {
   };
 
   const handleRightClick = () => {
-    playClickSound();
     const gameContainerWidth = 1800;
     const viewportWidth = window.innerWidth;
     const moveAmount = 20;
@@ -534,82 +530,66 @@ const Game = () => {
   };
 
   const handleHeadClick = () => {
-    playClickSound();
     setIsAbilitiesModalOpen(true);
   };
 
   const handleAbilitiesCloseModal = () => {
-    playClickSound();
     setIsAbilitiesModalOpen(false);
   };
 
   const handleTrophyClick = () => {
-    playClickSound();
     setIsAchievementsModalOpen(true);
   };
 
   const handleAchievementsCloseModal = () => {
-    playClickSound();
     setIsAchievementsModalOpen(false);
   }
 
   const handleEarthClick = () => {
-    playClickSound();
     setIsLanguagesModalOpen(true);
   };
 
   const handleLanguagesCloseModal = () => {
-    playClickSound();
     setIsLanguagesModalOpen(false);
   };
 
   const handleEducationCloseModal = () => {
-    playClickSound();
     setIsEducationModalOpen(false);
   };
 
   const handleCorporate1CloseModal = () => {
-    playClickSound();
     setIsCorporate1ModalOpen(false);
   };
 
   const handleCorporate2CloseModal = () => {
-    playClickSound();
     setIsCorporate2ModalOpen(false);
   };
 
   const handleYarnBallCloseModal = () => {
-    playClickSound();
     setIsYarnBallModalOpen(false);
   };
 
   const handleCorporate1BuildingClick = () => {
-    playClickSound();
     setIsCorporate1ModalOpen(true);
   };
 
   const handleCorporate2BuildingClick = () => {
-    playClickSound();
     setIsCorporate2ModalOpen(true);
   };
 
   const handleEducationBuildingClick = () => {
-    playClickSound();
     setIsEducationModalOpen(true);
   };
 
   const handleInstagramRedirect = () => {
-    playClickSound();
     window.open('https://www.instagram.com/crosetele_irinei', '_blank');
   };
 
   const handleLinkedInRedirect = () => {
-    playClickSound();
     window.open('https://www.linkedin.com/in/irina-vasilescu', '_blank');
   };
 
   const handleGmailRedirect = () => {
-    playClickSound();
     window.open('mailto:irinavasilescu@gmail.com', '_blank');
   };
 
@@ -618,7 +598,6 @@ const Game = () => {
   };
 
   const handleYarnBallClick = () => {
-    playClickSound();
     setIsYarnBallModalOpen(true);
   };
 
