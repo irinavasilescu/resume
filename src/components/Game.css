@@ -239,6 +239,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   z-index: 2;
 }
 
+.coin {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 275px; /* Position above buildings (buildings are ~200px tall, so 200px + 75px ground = 275px) */
+  background-image: url('../assets/coin.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 3;
+  image-rendering: pixelated;
+}
+
 .flower {
   position: absolute;
   background-size: contain;
@@ -529,6 +542,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   gap: 15px;
   padding: 20px;
   overflow-y: auto;
+  height: 70vh;
 }
 
 .abilities-description {
@@ -802,6 +816,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
   .modal-content {
     height: 100%;
+    max-height: unset;
     overflow-x: scroll;
   }
 }

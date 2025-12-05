@@ -7,6 +7,26 @@ import earthImage from '../assets/earth.png';
 const Game = () => {
   const [position, setPosition] = useState(0);
   const [characterScreenPosition, setCharacterScreenPosition] = useState(5); // Percentage from left
+  
+  // Keep refs in sync with state - update immediately
+  useEffect(() => {
+    positionRef.current = position;
+  }, [position]);
+  
+  useEffect(() => {
+    characterScreenPositionRef.current = characterScreenPosition;
+  }, [characterScreenPosition]);
+  
+  // Wrapper functions to update both state and refs synchronously
+  const updatePosition = (newPosition) => {
+    positionRef.current = newPosition;
+    setPosition(newPosition);
+  };
+  
+  const updateCharacterScreenPosition = (newPos) => {
+    characterScreenPositionRef.current = newPos;
+    setCharacterScreenPosition(newPos);
+  };
   const [isJumping, setIsJumping] = useState(false);
   const [direction, setDirection] = useState('right');
   const [isMuted, setIsMuted] = useState(true);
@@ -23,6 +43,8 @@ const Game = () => {
 
   const gameContainerRef = useRef(null);
   const audioRef = useRef(null);
+  const positionRef = useRef(0);
+  const characterScreenPositionRef = useRef(5);
 
   const [clouds, setClouds] = useState([
     { id: 1, top: '50px', left: '100px' },
@@ -92,27 +114,6 @@ const Game = () => {
           
           // Normal movement - move background
           const newPosition = prev + moveAmount;
-
-          // Check if character reaches upb
-          if (newPosition >= 200 && newPosition < 220) {
-            setIsEducationModalOpen(true);
-          }
-
-          // Check if character reaches corporate1
-          if (newPosition >= 620 && newPosition < 640) {
-            setIsCorporate1ModalOpen(true);
-          }
-
-          // Check if character reaches corporate2
-          if (newPosition >= 1100 && newPosition < 1120) {
-            setIsCorporate2ModalOpen(true);
-          }
-
-          // Check if character reaches yarn ball
-          if (newPosition >= 1350 && newPosition < 1370) {
-            setIsYarnBallModalOpen(true);
-          }
-
           return newPosition;
         });
         setDirection('right');
@@ -134,11 +135,6 @@ const Game = () => {
                 // If character is back to starting position (10%), allow background to scroll
                 if (clampedPos <= 10) {
                   const newPosition = Math.max(0, prev - moveAmount);
-                  // Check interactions
-                  if (newPosition >= 200 && newPosition < 220) setIsEducationModalOpen(true);
-                  if (newPosition >= 620 && newPosition < 640) setIsCorporate1ModalOpen(true);
-                  if (newPosition >= 1100 && newPosition < 1120) setIsCorporate2ModalOpen(true);
-                  if (newPosition >= 1350 && newPosition < 1370) setIsYarnBallModalOpen(true);
                   setPosition(newPosition);
                 }
                 return clampedPos;
@@ -150,27 +146,6 @@ const Game = () => {
           
           // Normal movement when not at end
           const newPosition = Math.max(0, prev - moveAmount);
-
-          // Check if character reaches upb
-          if (newPosition >= 200 && newPosition < 220) {
-            setIsEducationModalOpen(true);
-          }
-
-          // Check if character reaches corporate1
-          if (newPosition >= 620 && newPosition < 640) {
-            setIsCorporate1ModalOpen(true);
-          }
-
-          // Check if character reaches corporate2
-          if (newPosition >= 1100 && newPosition < 1120) {
-            setIsCorporate2ModalOpen(true);
-          }
-
-          // Check if character reaches yarn ball
-          if (newPosition >= 1350 && newPosition < 1370) {
-            setIsYarnBallModalOpen(true);
-          }
-
           return newPosition;
         });
         setDirection('left');
@@ -178,7 +153,29 @@ const Game = () => {
       
       if ((event.key === 'w' || event.key === 'W' || event.key === 'ArrowUp') && !isJumping) {
         setIsJumping(true);
-        setTimeout(() => setIsJumping(false), 500);
+        // Small delay to ensure state has updated before checking collision
+        setTimeout(() => {
+          // Check for coin collision multiple times during jump to catch the intersection
+          let collisionDetected = false;
+          const checkInterval = setInterval(() => {
+            // Get latest values from refs
+            const currentPos = positionRef.current;
+            const currentCharPos = characterScreenPositionRef.current;
+            // Only check if we haven't detected a collision yet
+            if (!collisionDetected) {
+              collisionDetected = checkCoinCollision(currentPos, currentCharPos);
+              if (collisionDetected) {
+                clearInterval(checkInterval);
+              }
+            }
+          }, 50); // Check every 50ms during jump
+          
+          // Stop checking after jump completes
+          setTimeout(() => {
+            clearInterval(checkInterval);
+            setIsJumping(false);
+          }, 450); // 500ms total - 50ms initial delay
+        }, 50);
       }
     };
 
@@ -212,11 +209,6 @@ const Game = () => {
             // If character is back to starting position (10%), allow background to scroll
             if (clampedPos <= 10) {
               const newPosition = Math.max(0, prev - moveAmount);
-              // Check interactions
-              if (newPosition >= 200 && newPosition < 220) setIsEducationModalOpen(true);
-              if (newPosition >= 620 && newPosition < 640) setIsCorporate1ModalOpen(true);
-              if (newPosition >= 1100 && newPosition < 1120) setIsCorporate2ModalOpen(true);
-              if (newPosition >= 1350 && newPosition < 1370) setIsYarnBallModalOpen(true);
               setPosition(newPosition);
             }
             return clampedPos;
@@ -228,27 +220,6 @@ const Game = () => {
       
       // Normal movement when not at end
       const newPosition = Math.max(0, prev - moveAmount);
-      
-      // Check if character reaches upb
-      if (newPosition >= 200 && newPosition < 220) {
-        setIsEducationModalOpen(true);
-      }
-      
-      // Check if character reaches corporate1
-      if (newPosition >= 620 && newPosition < 640) {
-        setIsCorporate1ModalOpen(true);
-      }
-      
-      // Check if character reaches corporate2
-      if (newPosition >= 1100 && newPosition < 1120) {
-        setIsCorporate2ModalOpen(true);
-      }
-      
-      // Check if character reaches yarn ball
-      if (newPosition >= 1350 && newPosition < 1370) {
-        setIsYarnBallModalOpen(true);
-      }
-      
       return newPosition;
     });
     setDirection('left');
@@ -274,36 +245,107 @@ const Game = () => {
       
       // Normal movement - move background
       const newPosition = prev + moveAmount;
-      
-      // Check if character reaches upb
-      if (newPosition >= 200 && newPosition < 220) {
-        setIsEducationModalOpen(true);
-      }
-      
-      // Check if character reaches corporate1
-      if (newPosition >= 620 && newPosition < 640) {
-        setIsCorporate1ModalOpen(true);
-      }
-      
-      // Check if character reaches corporate2
-      if (newPosition >= 1100 && newPosition < 1120) {
-        setIsCorporate2ModalOpen(true);
-      }
-      
-      // Check if character reaches yarn ball
-      if (newPosition >= 1350 && newPosition < 1370) {
-        setIsYarnBallModalOpen(true);
-      }
-      
       return newPosition;
     });
     setDirection('right');
   };
 
+  const checkCoinCollision = (currentPos, currentCharPos) => {
+    // Character position in the game world
+    const viewportWidth = window.innerWidth;
+    const gameContainerWidth = 1800;
+    const maxBackgroundScroll = gameContainerWidth - viewportWidth;
+    
+    // Character dimensions
+    const charWidth = 75;
+    
+    // Calculate character's world X position (center of character)
+    let charWorldX;
+    
+    if (currentPos >= maxBackgroundScroll) {
+      // Character is at end, calculate world position from screen position
+      const screenPixelsFromLeft = (currentCharPos / 100) * viewportWidth;
+      charWorldX = maxBackgroundScroll + screenPixelsFromLeft;
+    } else {
+      // Character is in normal scrolling area
+      const screenPixelsFromLeft = (currentCharPos / 100) * viewportWidth;
+      charWorldX = currentPos + screenPixelsFromLeft;
+    }
+    
+    // Character bounding box (X coordinates)
+    const charLeft = charWorldX - (charWidth / 2);
+    const charRight = charWorldX + (charWidth / 2);
+    
+    // Coin positions and dimensions
+    const coinWidth = 30;
+    const coinPositions = [
+      { x: 300, modal: 'education' },      // UPB building
+      { x: 700, modal: 'corporate1' },    // Bitdefender building
+      { x: 1200, modal: 'corporate2' },   // eMAG building
+      { x: 1400, modal: 'yarnBall' }      // Yarn ball
+    ];
+    
+    // Check for actual intersection with coins
+    let hitCoin = null;
+    
+    coinPositions.forEach(coin => {
+      // Coin bounding box (X coordinates)
+      const coinLeft = coin.x - (coinWidth / 2);
+      const coinRight = coin.x + (coinWidth / 2);
+      
+      // Check if character and coin intersect on X axis
+      if (charLeft < coinRight && charRight > coinLeft) {
+        hitCoin = coin;
+      }
+    });
+    
+    // Only open modal for the coin that was actually hit
+    if (hitCoin) {
+      switch(hitCoin.modal) {
+        case 'education':
+          setIsEducationModalOpen(true);
+          break;
+        case 'corporate1':
+          setIsCorporate1ModalOpen(true);
+          break;
+        case 'corporate2':
+          setIsCorporate2ModalOpen(true);
+          break;
+        case 'yarnBall':
+          setIsYarnBallModalOpen(true);
+          break;
+      }
+      return true; // Return true if collision detected
+    }
+    return false;
+  };
+
   const handleJumpClick = () => {
     if (!isJumping) {
       setIsJumping(true);
-      setTimeout(() => setIsJumping(false), 500);
+      // Small delay to ensure state has updated before checking collision
+      setTimeout(() => {
+        // Check for coin collision multiple times during jump to catch the intersection
+        let collisionDetected = false;
+        const checkInterval = setInterval(() => {
+          // Get latest values from refs
+          const currentPos = positionRef.current;
+          const currentCharPos = characterScreenPositionRef.current;
+          // Only check if we haven't detected a collision yet
+          if (!collisionDetected) {
+            collisionDetected = checkCoinCollision(currentPos, currentCharPos);
+            if (collisionDetected) {
+              clearInterval(checkInterval);
+            }
+          }
+        }, 50); // Check every 50ms during jump
+        
+        // Stop checking after jump completes
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          setIsJumping(false);
+        }, 450); // 500ms total - 50ms initial delay
+      }, 50);
     }
   };
 
@@ -608,6 +650,11 @@ const Game = () => {
       ></div>
 
       <div
+        className="coin coin-education"
+        style={{ left: '300px' }}
+      ></div>
+
+      <div
         className="flower flower2"
         style={{ left: '440px' }}
       ></div>
@@ -626,6 +673,11 @@ const Game = () => {
         className="corporate1-building"
         style={{ left: '600px' }}
         onClick={handleCorporate1BuildingClick}
+      ></div>
+
+      <div
+        className="coin coin-corporate1"
+        style={{ left: '700px' }}
       ></div>
 
       <div
@@ -650,9 +702,19 @@ const Game = () => {
       ></div>
 
       <div
+        className="coin coin-corporate2"
+        style={{ left: '1200px' }}
+      ></div>
+
+      <div
         className="crochet"
         style={{ left: '1350px' }}
         onClick={handleYarnBallClick}
+      ></div>
+
+      <div
+        className="coin coin-yarn"
+        style={{ left: '1400px' }}
       ></div>
 
       <div
