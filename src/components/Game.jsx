@@ -42,6 +42,7 @@ const Game = () => {
   const [isCorporate1ModalOpen, setIsCorporate1ModalOpen] = useState(false);
   const [isCorporate2ModalOpen, setIsCorporate2ModalOpen] = useState(false);
   const [isYarnBallModalOpen, setIsYarnBallModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [showPortalDialogue, setShowPortalDialogue] = useState(false);
   const [portalDialogueLeft, setPortalDialogueLeft] = useState(0);
   const [explodedCoins, setExplodedCoins] = useState(new Set());
@@ -226,6 +227,12 @@ const Game = () => {
     window.addEventListener('resize', checkScreenSize);
     window.addEventListener('orientationchange', setViewportHeight);
     
+    // Check if this is the first visit
+    const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
+    if (!hasSeenTutorial) {
+      setIsHelpModalOpen(true);
+    }
+    
     return () => {
       window.removeEventListener('resize', checkScreenSize);
       window.removeEventListener('orientationchange', setViewportHeight);
@@ -396,7 +403,17 @@ const Game = () => {
     setIsCorporate1ModalOpen(false);
     setIsCorporate2ModalOpen(false);
     setIsYarnBallModalOpen(false);
+    setIsHelpModalOpen(false);
   }
+
+  const handleHelpClick = () => {
+    setIsHelpModalOpen(true);
+  };
+
+  const handleHelpCloseModal = () => {
+    setIsHelpModalOpen(false);
+    localStorage.setItem('hasSeenTutorial', 'true');
+  };
 
   const handleLeftClick = () => {
     const gameContainerWidth = 1800;
@@ -882,6 +899,34 @@ const Game = () => {
         </div>
       )}
 
+      {isHelpModalOpen && (
+        <div className="modal-overlay" onClick={handleHelpCloseModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleHelpCloseModal}>×</button>
+            <div className="modal-content help">
+              <h2>HOW TO PLAY</h2>
+              <div className="help-content">
+                <div className="help-item">
+                  <strong>Move:</strong> Use A/D keys or arrow buttons
+                </div>
+                <div className="help-item">
+                  <strong>Jump:</strong> Press W or ↑ to collect coins
+                </div>
+                <div className="help-item">
+                  <strong>Coins:</strong> Jump to collect and learn more
+                </div>
+                <div className="help-item">
+                  <strong>Icons:</strong> Click head, trophy, or earth for info
+                </div>
+                <div className="help-item">
+                  <strong>Buildings:</strong> Click to see work experience
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="audio-controls">
         <button 
           className={`audio-control ${isMusicMuted ? 'muted' : ''}`}
@@ -894,6 +939,13 @@ const Game = () => {
           onClick={toggleSoundEffects}
         >
           {isSoundMuted ? 'SOUND OFF' : 'SOUND ON'}
+        </button>
+        <button 
+          className="help-button"
+          onClick={handleHelpClick}
+          title="Help"
+        >
+          ?
         </button>
       </div>
 
