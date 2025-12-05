@@ -253,6 +253,15 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   transition: opacity 0.3s ease;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .coin.exploded {
   opacity: 0;
   pointer-events: none;
@@ -260,6 +269,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 .coin.exploding {
   animation: explode 0.5s ease-out forwards;
+}
+
+.coin:not(.exploding):not(.exploded) {
+  animation: spin 2s linear infinite;
 }
 
 @keyframes explode {
